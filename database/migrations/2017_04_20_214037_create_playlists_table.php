@@ -13,7 +13,11 @@ class CreatePlaylistsTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('playlists', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('name');
+        $table->timestamps();
+      });
     }
 
     /**
@@ -23,6 +27,6 @@ class CreatePlaylistsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('playlists');
     }
 }

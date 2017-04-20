@@ -14,7 +14,7 @@
       <div class="overlay" v-if="normal">
         <div class="title">
           <h1>Welcome to Crowdplay</h1>
-          <button class="btn-main create-btn arrow-right">
+          <button @click="createPlaylist" class="btn-main create-btn arrow-right">
             <span>Create a new playlist</span>
           </button>
           <button class="btn-info" id="info" @click="info">
@@ -23,6 +23,7 @@
         </div>
       </div>
       <Info class="overlay" v-if="infoMode" @goHome="normalView"></Info>
+      <NewPlaylist class="overlay" v-if="formMode" @goHome="normalView"></NewPlaylist>
     </div>
   </div>
 </template>
@@ -30,6 +31,7 @@
 <script>
 
 import Info from './Info'
+import NewPlaylist from './NewPlaylist'
 
 export default {
     data () {
@@ -38,7 +40,8 @@ export default {
         webmSrc: "./Bokeh-Tov.webm",
         imgSrc: "./Bokeh-Tov.jpg",
         normal: true,
-        infoMode: false
+        infoMode: false,
+        formMode: false
       }
     },
     mounted() {
@@ -110,7 +113,8 @@ export default {
         // end of jQuery for video play
     },
     components: {
-      Info
+      Info,
+      NewPlaylist
     },
     methods: {
       info () {
@@ -119,7 +123,12 @@ export default {
       },
       normalView () {
         this.infoMode = false
+        this.formMode = false
         this.normal = true
+      },
+      createPlaylist () {
+        this.normal = false
+        this.formMode = true
       }
     }
 }
