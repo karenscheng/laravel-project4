@@ -139,6 +139,7 @@ export default {
 
 .homepage, .normal-view {
   height: 100vh;
+  width: 100vw;
 }
 
 .homepage-hero-module {

@@ -12,7 +12,7 @@
 <script>
 
 import PlaylistForm from './PlaylistForm'
-import Loader from './Loader'
+// import Loader from './Loader'
 
 export default {
     data () {
@@ -62,10 +62,6 @@ export default {
   background-color: rgba(0, 0, 0, .5);
   height: 80vh;
   width: 80vw;
-  /*display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;*/
   padding: 20px;
 }
 

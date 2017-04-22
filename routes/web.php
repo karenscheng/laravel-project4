@@ -11,6 +11,11 @@
 |
 */
 
+use Illuminate\Http\Request;
+
+Route::get('/playlists', 'PlaylistController@index');
+Route::post('/playlists', 'PlaylistController@create');
+
 Route::get('/', function () {
     return view('welcome');
 });
