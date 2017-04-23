@@ -87,7 +87,7 @@ h1 {
 }
 
 .btn-main:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255,	215,175, 0.1);
 }
 
 </style>

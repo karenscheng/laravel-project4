@@ -1,7 +1,9 @@
 <template>
   <div class="playlistform">
     <h1>Create a New Playlist</h1>
-    <input type="text" placeholder="Playlist Name" v-model="name" />
+    <form action="#" v-on:submit="create">
+      <input type="text" placeholder="Playlist Name" v-model="name" />
+    </form>
     <p class="boo" v-if="error">Error: Playlist could not be created</p>
     <p class="yay" v-if="success">Playlist created!</p>
     <button class="btn btn-main" @click="create" :disabled="loading">Create Playlist</button>
@@ -45,9 +47,9 @@ export default {
           console.log(response.data);
           this.loading = false;
           this.success = true;
-          this.name = '';
           this.reset();
-          this.$emit('created');
+          this.$emit('created', this.name);
+          this.name = '';
         })
         .catch((error) => {
           console.error('ContactForm -> sendRequest error');
@@ -133,7 +135,7 @@ input {
 }
 
 .btn-main:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255,	215,175, 0.1);
 }
 
 </style>

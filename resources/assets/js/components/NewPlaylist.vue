@@ -1,40 +1,50 @@
 <template>
   <div class="newplaylist">
-    <div class="panel">
+    <div class="backdrop" v-show="first">
       <button class="btn-main" @click="returnHome">
         <span>Cancel</span>
       </button>
       <PlaylistForm @created="fetch"></PlaylistForm>
     </div>
+    <PlaylistCreator v-show="creation" :name="name"></PlaylistCreator>
   </div>
 </template>
 
 <script>
 
 import PlaylistForm from './PlaylistForm'
+import PlaylistCreator from './PlaylistCreator'
 // import Loader from './Loader'
 
 export default {
     data () {
       return {
-        loading: false
+        loading: false,
+        first: true,
+        creation: false,
+        name: ''
       }
     },
     components: {
-      PlaylistForm
+      PlaylistForm,
+      PlaylistCreator
     },
     methods: {
       returnHome () {
         this.$emit("goHome")
       },
-      fetch () {
+      fetch (name) {
         console.log('NewPlaylist -> fetch');
         this.loading = true;
+        console.log('NewPlaylist -> name: ' + name);
+        this.name = name;
         axios.get('/playlists')
           .then((response) => {
             console.log('NewPlaylist -> fetch success');
             console.log(response.data);
             this.loading = false;
+            this.first = false;
+            this.creation = true;
           })
           .catch((response) => {
             console.log('App -> fetch error');
@@ -58,10 +68,10 @@ export default {
   align-items: center;
 }
 
-.panel {
+.backdrop {
   background-color: rgba(0, 0, 0, .5);
-  height: 80vh;
-  width: 80vw;
+  height: 90vh;
+  width: 90vw;
   padding: 20px;
 }
 
@@ -86,7 +96,7 @@ export default {
 }
 
 .btn-main:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255,	215,175, 0.1);
 }
 
 </style>
