@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Homepage v-if="start"></Homepage>
+    <Homepage></Homepage>
   </div>
 </template>
 

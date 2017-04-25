@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Playlist;
+use App\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 class VideoController extends Controller
 {
@@ -15,6 +19,27 @@ class VideoController extends Controller
     public function create (Request $request, $id)
     {
       $playlist = Playlist::find($id);
-      $video = $playlist->videos->create($request->all());
+      $video = $playlist->videos()->create($request->all());
+      return Response::json($video);
+    }
+
+    public function show ($id)
+    {
+      $video = Video::find($id);
+      return Response::json($video);
+    }
+
+    public function update (Request $request, $id)
+    {
+      $video = Video::find($id);
+      $success = $video->update($request->all());
+      return Response::json(['updated' => $success]);
+    }
+
+    public function destroy ($id)
+    {
+      $video = Video::find($id);
+      $video->delete();
+      return Response::json(['deleted' => true]);
     }
 }

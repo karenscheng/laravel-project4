@@ -20,6 +20,7 @@
           <button class="btn-info" id="info" @click="info">
             <span>What is Crowdplay?</span>
           </button>
+          <a href="/styleguide">Styleguide</a>
         </div>
       </div>
       <Info class="overlay" v-if="infoMode" @goHome="normalView"></Info>
@@ -32,6 +33,7 @@
 
 import Info from './Info'
 import NewPlaylist from './NewPlaylist'
+import axios from 'axios'
 
 export default {
     data () {
@@ -258,13 +260,17 @@ h1 {
 }
 
 .btn-main:hover {
-  background: rgba(255,	215,175, 0.1);
+  background: rgba(255,	215, 175, 0.1);
 }
 
 #info {
   cursor: pointer;
   color: white;
   font-family: "Open Sans", sans-serif;
+}
+
+#styleguide {
+  cursor: pointer;
 }
 
 </style>

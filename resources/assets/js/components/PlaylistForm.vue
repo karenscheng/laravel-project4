@@ -22,6 +22,7 @@ export default {
         loading: false,
         error: false,
         success: false
+        // playlist: null
       }
     },
     // components: {
@@ -47,8 +48,9 @@ export default {
           console.log(response.data);
           this.loading = false;
           this.success = true;
+          // this.playlist = response.data;
           this.reset();
-          this.$emit('created', this.name);
+          this.$emit('created', response.data);
           this.name = '';
         })
         .catch((error) => {
@@ -135,7 +137,8 @@ input {
 }
 
 .btn-main:hover {
-  background: rgba(255,	215,175, 0.1);
+  background: rgba(255,	215,175, 0.3);
+  color: 	#ffd7af;
 }
 
 </style>

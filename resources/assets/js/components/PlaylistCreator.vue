@@ -1,7 +1,7 @@
 <template>
   <div class="playlistcreator">
     <div class="theme-panel">
-      <h2>Edit playlist "{{ this.name }}" </h2>
+      <h2>Edit playlist "{{ this.playlist.name }}" </h2>
     </div>
     <div class="overlay-panel">
       <h3>Add video to playlist</h3>
@@ -16,6 +16,9 @@
       <div class="row">
         <button class="btn btn-main" @click="add">Add Video</button>
       </div>
+      <iframe id="player" type="text/html" width="640" height="390"
+  src="http://www.youtube.com/embed/Q5_47eLxb8o?enablejsapi=1&origin=http://example.com"
+  frameborder="0"></iframe>
     </div>
   </div>
 </template>
@@ -30,30 +33,65 @@ export default {
         videoName: '',
         link: '',
         error: false,
-        success: false
+        success: false,
+        player: null,
+        done: false,
+        tag: null,
+        firstScriptTag: null
       }
     },
-    props: {
-      name
-    },
+    props: [
+      'playlist'
+    ],
+
     components: {
       //optional
     },
+    // created () {
+    //   // 2. This code loads the IFrame Player API code asynchronously.
+    //   this.tag = document.createElement('script');
+    //   this.tag.src = 'https://www.youtube.com/iframe_api';
+    //   this.firstScriptTag = document.getElementsByTagName('script')[0];
+    //   this.firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    //
+    // },
     methods: {
       add () {
         console.log('PlaylistCreator -> add');
-        this.videoName = '';
-        this.link = '';
         this.sendRequest();
-    },
-    sendRequest () {
-      // console.log(playlist.id);
-      axios.post('playlists/${playlist.id}/videos', {
-        name: this.videoName,
-        link: this.link
-      })
+        this.videoName = '';
+        this.link = ''
+      },
+      // onYouTubeIframeAPIReady() {
+      //   this.player = new YT.Player('player', {
+      //     height: '390',
+      //     width: '640',
+      //     videoId: 'M7lc1UVf-VE',
+      //     events: {
+      //       'onReady': onPlayerReady,
+      //       'onStateChange': onPlayerStateChange
+      //     }
+      //   });
+      // },
+      // onPlayerReady(event) {
+      //   event.target.playVideo();
+      // },
+      // onPlayerStateChange(event) {
+      //   if (event.data == YT.PlayerState.PLAYING && !done) {
+      //     setTimeout(stopVideo, 6000);
+      //     this.done = true;
+      //   }
+      // },
+      // stopVideo() {
+      //   this.player.stopVideo();
+      // },
+      sendRequest () {
+        axios.post(`playlists/${this.playlist.id}/videos`, {
+          name: this.videoName,
+          link: this.link
+        })
         .then((response) => {
-          console.log('PlaylistCreator -> fetch success');
+          console.log('PlaylistCreator -> post success');
           console.log(response.data);
           this.success = true;
         })
@@ -61,8 +99,7 @@ export default {
           console.log('PlaylistCreator -> sendRequest error');
           this.error = true;
         });
-      // axios.post('/playlists/')
-    }
+      }
   }
 }
 
@@ -153,7 +190,8 @@ form input {
 }
 
 .btn-main:hover {
-  background: rgba(255,	215,175, 0.1);
+  background: rgba(255,	215,175, 0.3);
+  color: 	#ffd7af;
 }
 
 </style>

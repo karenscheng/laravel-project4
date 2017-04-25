@@ -11,7 +11,7 @@
 |
 */
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 
 Route::get('/playlists', 'PlaylistController@index');
 Route::post('/playlists', 'PlaylistController@create');
@@ -23,6 +23,14 @@ Route::delete('/playlists/{id}', 'PlaylistController@destroy');
 Route::get('/videos', 'VideoController@index');
 Route::post('/playlists/{id}/videos', 'VideoController@create');
 
+Route::get('/videos/{id}', 'VideoController@show');
+Route::put('/videos/{id}', 'VideoController@update');
+Route::delete('/videos/{id}', 'VideoController@destroy');
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('app');
+});
+
+Route::get('/styleguide', function () {
+    return view('styleguide');
 });

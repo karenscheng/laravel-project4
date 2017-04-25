@@ -4,9 +4,9 @@
       <button class="btn-main" @click="returnHome">
         <span>Cancel</span>
       </button>
-      <PlaylistForm @created="fetch"></PlaylistForm>
+      <PlaylistForm @created="created"></PlaylistForm>
     </div>
-    <PlaylistCreator v-show="creation" :name="name"></PlaylistCreator>
+    <PlaylistCreator v-if="creation" :playlist="playlist"></PlaylistCreator>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ export default {
       return {
         loading: false,
         first: true,
+        playlist: null,
         creation: false,
         name: ''
       }
@@ -33,24 +34,13 @@ export default {
       returnHome () {
         this.$emit("goHome")
       },
-      fetch (name) {
+      created (playlist) {
         console.log('NewPlaylist -> fetch');
+        this.playlist = playlist;
         this.loading = true;
-        console.log('NewPlaylist -> name: ' + name);
-        this.name = name;
-        axios.get('/playlists')
-          .then((response) => {
-            console.log('NewPlaylist -> fetch success');
-            console.log(response.data);
-            this.loading = false;
-            this.first = false;
-            this.creation = true;
-          })
-          .catch((response) => {
-            console.log('App -> fetch error');
-            // show error
-            this.loading = false;
-          })
+        this.loading = false;
+        this.first = false;
+        this.creation = true;
       },
     }
 }
@@ -96,7 +86,7 @@ export default {
 }
 
 .btn-main:hover {
-  background: rgba(255,	215,175, 0.1);
+  background: rgba(255,	215,175, 0.3);
 }
 
 </style>

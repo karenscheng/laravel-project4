@@ -17,8 +17,8 @@ class PlaylistController extends Controller
 
     public function create (Request $request)
     {
-      Playlist::create($request->all());
-      return Response::json(['created' => true]);
+      $playlist = Playlist::create($request->all());
+      return Response::json($playlist);
     }
 
     public function show ($id)
