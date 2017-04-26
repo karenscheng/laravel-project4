@@ -16,6 +16,9 @@
 
 // http://www.youtube.com/embed/Q5_47eLxb8o?enablejsapi=1&origin=http://example.com
 // https://www.youtube.com/watch?v=Q5_47eLxb8o
+// https://www.youtube.com/watch?v=EfYf6RIxZ3Y
+// https://www.youtube.com/watch?v=ultX5ZR-sQE
+// https://www.youtube.com/watch?v=ukNOaKeUEQY
 
 export default {
     data () {
@@ -27,7 +30,7 @@ export default {
       console.log('PlaylistView -> this.currentVideo: ' + this.currentVideo);
       var videoId = this.parseLink(this.currentVideo.link);
       //autoplay=1&
-      this.modifiedLink = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&origin=http://example.com';
+      this.modifiedLink = 'https://www.youtube.com/embed/' + videoId + '?origin=http://example.com';
       console.log(this.modifiedLink);
     },
     props: [

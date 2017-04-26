@@ -47,6 +47,7 @@ export default {
           .then((response) => {
             console.log('NewPlaylist -> fetch response.data: ' + response.data);
             this.videos = response.data;
+            console.log(this.videos);
           })
           .catch((response) => {
             console.log('NewPlaylist -> fetch error');

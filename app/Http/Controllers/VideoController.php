@@ -31,10 +31,8 @@ class VideoController extends Controller
 
     public function view (Request $request, $id)
     {
-      $allvideos = Video::all();
-      $collection = $allvideos->keyBy('playlist_id');
-
-      $videos = $allvideos->get($id);
+      $playlist = Playlist::find($id);
+      $videos = $playlist->videos;
       return Response::json($videos);
     }
 
