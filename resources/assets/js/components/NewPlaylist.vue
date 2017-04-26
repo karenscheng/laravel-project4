@@ -6,7 +6,7 @@
       </button>
       <PlaylistForm @created="created"></PlaylistForm>
     </div>
-    <PlaylistCreator @created="fetch" v-if="creation" :playlist="playlist"></PlaylistCreator>
+    <PlaylistCreator @goFetch="fetch" v-if="creation" :playlist="playlist" :videos="videos"></PlaylistCreator>
   </div>
 </template>
 

@@ -47,6 +47,6 @@ class VideoController extends Controller
     {
       $video = Video::find($id);
       $video->delete();
-      return Response::json(['deleted' => true]);
+      return Response::json($video);
     }
 }

@@ -17,10 +17,10 @@
       <div class="row">
         <button class="btn btn-main" @click="add">Add Video</button>
       </div>
-      <div v-if="!added" class="playlistview-placeholder">
-        <h3>Your playlist is currently empty.</h3>
+      <div class="playlistview-placeholder">
+        <h3 v-if="videos.length == 0">Your playlist is currently empty.</h3>
+        <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="edit"></PlaylistView>
       </div>
-      <PlaylistView v-if="added" :currentVideo="currentVideo"></PlaylistView>
       <!-- <div class="row">
         <button class="btn btn-main">Save</button>
       </div> -->
@@ -44,26 +44,17 @@ export default {
         done: false,
         tag: null,
         firstScriptTag: null,
-        added: false,
-        currentVideo: null,
-        videos: []
+        currentVideo: null
       }
     },
     props: [
-      'playlist'
+      'playlist',
+      'videos'
     ],
 
     components: {
       PlaylistView
     },
-    // created () {
-    //   // 2. This code loads the IFrame Player API code asynchronously.
-    //   this.tag = document.createElement('script');
-    //   this.tag.src = 'https://www.youtube.com/iframe_api';
-    //   this.firstScriptTag = document.getElementsByTagName('script')[0];
-    //   this.firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    //
-    // },
     methods: {
       add () {
         console.log('PlaylistCreator -> add');
@@ -71,29 +62,27 @@ export default {
         this.videoName = '';
         this.link = ''
       },
-      // onYouTubeIframeAPIReady() {
-      //   this.player = new YT.Player('player', {
-      //     height: '390',
-      //     width: '640',
-      //     videoId: 'M7lc1UVf-VE',
-      //     events: {
-      //       'onReady': onPlayerReady,
-      //       'onStateChange': onPlayerStateChange
-      //     }
-      //   });
-      // },
-      // onPlayerReady(event) {
-      //   event.target.playVideo();
-      // },
-      // onPlayerStateChange(event) {
-      //   if (event.data == YT.PlayerState.PLAYING && !done) {
-      //     setTimeout(stopVideo, 6000);
-      //     this.done = true;
-      //   }
-      // },
-      // stopVideo() {
-      //   this.player.stopVideo();
-      // },
+      remove(video) {
+        console.log('PlaylistCreator -> remove' + video);
+        axios.delete(`videos/${video.id}`)
+          .then((response) => {
+            console.log('PlaylistCreator -> video delete success' + response.data);
+            this.$emit('goFetch', response.data)
+          })
+          .catch((error) => {
+            console.log('PlaylistCreator -> delete video error');
+          })
+      },
+      edit(video) {
+        console.log('PlaylistCreator -> edit' + video);
+        axios.put(`videos/${video.id}`)
+          .then((response) => {
+            console.log('PlaylistCreator -> put success');
+          })
+          .catch((error) => {
+            console.log('PlaylistCreator -> edit video error');
+          })
+      },
       sendRequest () {
         axios.post(`playlists/${this.playlist.id}/videos`, {
           name: this.videoName,
@@ -104,8 +93,7 @@ export default {
           console.log(response.data);
           this.currentVideo = response.data;
           this.success = true;
-          this.added = true;
-          this.$emit('created', response.data);
+          this.$emit('goFetch', response.data);
         })
         .catch((error) => {
           console.log('PlaylistCreator -> sendRequest error');
@@ -241,6 +229,12 @@ form input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow-y: scroll;
+  position: relative;
+}
+
+.playlistview {
+  margin-bottom: 5px
 }
 
 </style>

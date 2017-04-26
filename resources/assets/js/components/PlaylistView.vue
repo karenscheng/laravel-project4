@@ -1,10 +1,21 @@
 <template>
   <div class="playlistview">
     <div class="videoBox">
-      <div class="flexme">
-        <h3>{{ this.currentVideo.name }}</h3>
+      <div class="delete-btn">
+        <img src="/delete.png" @click="remove"></img>
       </div>
-      <iframe id="player" type="text/html" width="256" height="156"
+      <div class="vertical-flex">
+        <div class="flexme">
+          <img src="/edit.png" v-if="!editing" @click="edit"></img>
+          <div class="form-div">
+            <form action="#" v-on:submit="doneEditing" v-if="editing">
+              <input type="text" :placeholder="currentVideo.name" v-model="currentVideo.name">
+            </form>
+          </div>
+          <h3 v-if="!editing">{{ this.currentVideo.name }}</h3>
+        </div>
+      </div>
+      <iframe id="player" type="text/html" width="128" height="78"
   :src="this.modifiedLink" frameborder="0"></iframe>
     </div>
   </div>
@@ -23,7 +34,8 @@
 export default {
     data () {
       return {
-        modifiedLink: ''
+        modifiedLink: '',
+        editing: false
       }
     },
     created () {
@@ -41,6 +53,18 @@ export default {
           var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
           var match = url.match(regExp);
           return (match&&match[7].length==11)? match[7] : false;
+      },
+      remove () {
+        this.$emit('remove', this.currentVideo);
+      },
+      edit () {
+        this.$emit('edit', this.currentVideo);
+        this.editing = true;
+      },
+      doneEditing () {
+        // console.log('edited video name: ' + this.currentVideo.name);
+        this.editing = false;
+        this.$emit('edit', this.currentVideo);
       }
     }
 }
@@ -53,22 +77,44 @@ export default {
   display: flex;
   width: 80vw;
   justify-content: center;
+  position: relative;
+  margin-left: -150px;
+}
 
+.vertical-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .flexme {
   display: flex;
-  flex-direction: column;
-  align-items: baseline;
+  flex-direction: row;
+  align-items: center;
+  /*margin-top: 20px;*/
   justify-content: center;
+  position: absolute;
+  left: 700px;
 }
 
-.playlistview {
-  height: 45vh;
-  padding: 10px;
-  overflow: scroll;
-  width: 80vw;
-  background-color: rgba(255, 255, 255, 0.1);
+img {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/*.flexme h3 {
+  text-align: right;
+}*/
+
+.delete-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
 }
 
 h2 {
@@ -85,6 +131,28 @@ h3 {
   color: white;
   align-self: baseline;
   margin-right: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+form {
+  margin-top: 15px;
+}
+
+form input {
+  width: 250px;
+  font-family: 'Open Sans';
+  color: white;
+  /*margin: 5px 15px;*/
+  padding: 5px;
+  background-color: transparent;
+  outline: none;
+  outline-style: none;
+  outline-offset: 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid #eeeeee 1px;
 }
 
 </style>
