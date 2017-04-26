@@ -1,7 +1,14 @@
 <template>
   <div class="playlistcreator">
     <div class="theme-panel">
-      <h2>Edit playlist "{{ this.playlist.name }}" </h2>
+      <h2 v-if="!editing">Edit playlist "<span class="white">{{ this.playlist.name }}</span>"</h2>
+      <div v-if="editing" class="edit-div">
+        <h2>Edit playlist</h2>
+        <form action="#" v-on:submit="doneEditing">
+          <input type="text" class="playlist-name" :placeholder="playlist.name" v-model="playlist.name">
+        </form>
+      </div>
+      <img src="/edit.png" v-if="!editing" id="edit-btn" @click="editPlaylist"></img>
       <button class="btn btn-main save">Save</button>
     </div>
     <div class="overlay-panel">
@@ -19,7 +26,7 @@
       </div>
       <div class="playlistview-placeholder">
         <h3 v-if="videos.length == 0">Your playlist is currently empty.</h3>
-        <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="edit"></PlaylistView>
+        <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo"></PlaylistView>
       </div>
       <!-- <div class="row">
         <button class="btn btn-main">Save</button>
@@ -44,7 +51,8 @@ export default {
         done: false,
         tag: null,
         firstScriptTag: null,
-        currentVideo: null
+        currentVideo: null,
+        editing: false
       }
     },
     props: [
@@ -73,7 +81,7 @@ export default {
             console.log('PlaylistCreator -> delete video error');
           })
       },
-      edit(video) {
+      editVideo(video) {
         console.log('PlaylistCreator -> edit' + video);
         axios.put(`videos/${video.id}`)
           .then((response) => {
@@ -82,6 +90,13 @@ export default {
           .catch((error) => {
             console.log('PlaylistCreator -> edit video error');
           })
+      },
+      editPlaylist() {
+        this.$emit('edit');
+        this.editing = true;
+      },
+      doneEditing(){
+        this.editing = false;
       },
       sendRequest () {
         axios.post(`playlists/${this.playlist.id}/videos`, {
@@ -126,6 +141,22 @@ export default {
   align-items: center;
 }
 
+#edit-btn {
+  height: 35px;
+  width: 35px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.edit-div {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit-div form {
+  align-self: center;
+}
+
 .theme-panel {
   width: 100vw;
   height: 15vh;
@@ -144,6 +175,10 @@ h2 {
   font-style: normal;
   font-size: 48px;
   cursor: default;
+}
+
+h2 span {
+  color: white;
 }
 
 h3 {
@@ -170,6 +205,11 @@ form input {
   border-left: none;
   border-right: none;
   border-bottom: solid #eeeeee 1px;
+}
+
+.playlist-name {
+  width: 250px;
+  font-size: 32px;
 }
 
 .btn-main {
