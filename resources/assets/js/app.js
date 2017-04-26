@@ -13,9 +13,9 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('App', require('./components/App.vue'));
+ Vue.component('app-index', require('./components/App.vue'));
+ Vue.component('app-add', require('./components/Add.vue'));
 
-const app = new Vue({
-    el: '#app',
-    template: '<App />'
-});
+ const app = new Vue({
+   el: '#app'
+ });

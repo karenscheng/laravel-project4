@@ -17,10 +17,11 @@
         <div class="flex-center position-ref full-height">
 
           <div id="app">
-              <app-index></app-index>
+              <app-add></app-add>
           </div>
 
           <script>
+              window.playlist_id = {{ $playlist->id }};
               window.Laravel = {!! json_encode([
                   'csrfToken' => csrf_token(),
               ]) !!};

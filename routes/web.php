@@ -35,3 +35,9 @@ Route::get('/', function () {
 Route::get('/styleguide', function () {
     return view('styleguide');
 });
+
+Route::get('/edit/{id}', function ($id) {
+    $data = [];
+    $playlist = $data['playlist'] = App\Playlist::find($id);
+    return view('add', $data);
+});
