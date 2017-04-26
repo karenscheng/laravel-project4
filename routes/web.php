@@ -21,6 +21,7 @@ Route::put('/playlists/{id}', 'PlaylistController@update');
 Route::delete('/playlists/{id}', 'PlaylistController@destroy');
 
 Route::get('/videos', 'VideoController@index');
+Route::get('/playlists/{id}/videos', 'VideoController@view');
 Route::post('/playlists/{id}/videos', 'VideoController@create');
 
 Route::get('/videos/{id}', 'VideoController@show');

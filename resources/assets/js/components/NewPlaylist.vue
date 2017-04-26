@@ -6,7 +6,7 @@
       </button>
       <PlaylistForm @created="created"></PlaylistForm>
     </div>
-    <PlaylistCreator v-if="creation" :playlist="playlist"></PlaylistCreator>
+    <PlaylistCreator @created="fetch" v-if="creation" :playlist="playlist"></PlaylistCreator>
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
         first: true,
         playlist: null,
         creation: false,
-        name: ''
+        videos: []
       }
     },
     components: {
@@ -35,13 +35,23 @@ export default {
         this.$emit("goHome")
       },
       created (playlist) {
-        console.log('NewPlaylist -> fetch');
         this.playlist = playlist;
         this.loading = true;
         this.loading = false;
         this.first = false;
         this.creation = true;
       },
+      fetch (video) {
+        // console.log('NewPlaylist->fetch: playlist_id ' + video.playlist_id);
+        axios.get(`/playlists/${video.playlist_id}/videos`)
+          .then((response) => {
+            console.log('NewPlaylist -> fetch response.data: ' + response.data);
+            this.videos = response.data;
+          })
+          .catch((response) => {
+            console.log('NewPlaylist -> fetch error');
+          })
+      }
     }
 }
 

@@ -2,6 +2,7 @@
   <div class="playlistcreator">
     <div class="theme-panel">
       <h2>Edit playlist "{{ this.playlist.name }}" </h2>
+      <button class="btn btn-main save">Save</button>
     </div>
     <div class="overlay-panel">
       <h3>Add video to playlist</h3>
@@ -11,14 +12,18 @@
           <input type="text" placeholder="Youtube video link" v-model="link">
         </form>
       </div>
-      <p class="boo" v-if="error">Error: Playlist could not be created</p>
-      <p class="yay" v-if="success">Playlist created!</p>
+      <p class="boo" v-if="error">Error: Video could not be added</p>
+      <!-- <p class="yay" v-if="success">Video added!</p> -->
       <div class="row">
         <button class="btn btn-main" @click="add">Add Video</button>
       </div>
-      <iframe id="player" type="text/html" width="640" height="390"
-  src="http://www.youtube.com/embed/Q5_47eLxb8o?enablejsapi=1&origin=http://example.com"
-  frameborder="0"></iframe>
+      <div v-if="!added" class="playlistview-placeholder">
+        <h3>Your playlist is currently empty.</h3>
+      </div>
+      <PlaylistView v-if="added" :currentVideo="currentVideo"></PlaylistView>
+      <!-- <div class="row">
+        <button class="btn btn-main">Save</button>
+      </div> -->
     </div>
   </div>
 </template>
@@ -26,6 +31,7 @@
 <script>
 
 import axios from 'axios';
+import PlaylistView from './PlaylistView';
 
 export default {
     data () {
@@ -37,7 +43,10 @@ export default {
         player: null,
         done: false,
         tag: null,
-        firstScriptTag: null
+        firstScriptTag: null,
+        added: false,
+        currentVideo: null,
+        videos: []
       }
     },
     props: [
@@ -45,7 +54,7 @@ export default {
     ],
 
     components: {
-      //optional
+      PlaylistView
     },
     // created () {
     //   // 2. This code loads the IFrame Player API code asynchronously.
@@ -93,7 +102,10 @@ export default {
         .then((response) => {
           console.log('PlaylistCreator -> post success');
           console.log(response.data);
+          this.currentVideo = response.data;
           this.success = true;
+          this.added = true;
+          this.$emit('created', response.data);
         })
         .catch((error) => {
           console.log('PlaylistCreator -> sendRequest error');
@@ -130,8 +142,10 @@ export default {
   width: 100vw;
   height: 15vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  position: relative;
   background-image: url('/Bokeh-Tov.jpg');
 }
 
@@ -157,6 +171,7 @@ form {
 form input {
   width: 30vw;
   font-family: 'Open Sans';
+  color: white;
   margin: 5px 15px;
   padding: 5px;
   background-color: transparent;
@@ -189,9 +204,43 @@ form input {
   font-size: 12px;
 }
 
+.save {
+  margin: 0;
+  position: absolute;
+  top: 30px;
+  right: 200px;
+  padding: 10px 25px;
+  font-size: 16px;
+  /*align-self: flex-end;*/
+}
+
 .btn-main:hover {
   background: rgba(255,	215,175, 0.3);
   color: 	#ffd7af;
+}
+
+.boo, .yay {
+  /*margin-top: -5px;*/
+  margin-bottom: -5px;
+}
+
+.boo {
+  color: red
+}
+
+.yay {
+  color: green
+}
+
+.playlistview-placeholder {
+  margin-top: 10px;
+  height: 45vh;
+  width: 80vw;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 </style>

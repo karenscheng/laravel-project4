@@ -20,7 +20,11 @@
           <button class="btn-info" id="info" @click="info">
             <span>What is Crowdplay?</span>
           </button>
-          <a href="/styleguide">Styleguide</a>
+          <div class="credits">
+            <a href="/styleguide" class="credit-entry">Styleguide</a>
+            <a href="http://karenscheng.com/" target="_newtab" class="credit-entry">Portfolio</a>
+            <a href="https://github.com/karenscheng" target="_newtab" class="credit-entry">Github</a>
+          </div>
         </div>
       </div>
       <Info class="overlay" v-if="infoMode" @goHome="normalView"></Info>
@@ -271,6 +275,24 @@ h1 {
 
 #styleguide {
   cursor: pointer;
+}
+
+.credits {
+  margin-top: 30px;
+  margin-bottom: -20px;
+  display: flex;
+  width: 30vw;
+  justify-content: space-between;
+}
+
+.credit-entry {
+  color: white;
+  text-decoration: none;
+}
+
+.styleguide:hover {
+  color: white;
+  text-decoration: underline;
 }
 
 </style>
