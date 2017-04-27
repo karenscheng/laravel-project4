@@ -22,15 +22,20 @@ Route::put('/playlists/{id}', 'PlaylistController@update');
 Route::delete('/playlists/{id}', 'PlaylistController@destroy');
 
 Route::get('/videos', 'VideoController@index');
-Route::get('/playlists/{id}/videos', 'VideoController@view');
+Route::get('/playlists/{id}/videos', 'VideoController@view'); //get all videos of a certain playlist
+Route::get('/playlist/playlists/{id}/videos', 'VideoController@view');  //admin view permission
 Route::get('/edit/playlists/{id}/videos', 'VideoController@view');  //permission for /edit route
-Route::post('/playlists/{id}/videos', 'VideoController@create');
+Route::post('/playlists/{id}/videos', 'VideoController@create');  //add video to playlist
+Route::post('/playlist/playlists/{id}/videos', 'VideoController@create');  //admin view permission
 Route::post('/edit/playlists/{id}/videos', 'VideoController@create'); //permission for /edit route
 
 Route::get('/videos/{id}', 'VideoController@show');
-Route::put('/videos/{id}', 'VideoController@update');
+Route::put('/videos/{id}', 'VideoController@update'); //edit video name
+Route::put('/playlist/videos/{id}', 'VideoController@update');  //admin view permission
+Route::put('/edit/videos/{id}', 'VideoController@update');  //permission for /edit route
 Route::delete('/videos/{id}', 'VideoController@destroy');
-Route::delete('/edit/videos/{id}', 'VideoController@destroy');
+Route::delete('/videos/{id}', 'VideoController@destroy');
+// Route::delete('/edit/videos/{id}', 'VideoController@destroy');
 
 Route::get('/', function () {
     return view('app');
