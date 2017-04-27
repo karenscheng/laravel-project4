@@ -6,7 +6,8 @@
       </button>
       <PlaylistForm @created="created"></PlaylistForm>
     </div>
-    <PlaylistCreator @goFetch="fetch" @edit="edit" v-if="creation" :playlist="playlist" :videos="videos"></PlaylistCreator>
+    <PlaylistCreator @goFetch="fetch" @edit="edit" @play="play" v-if="creation" :playlist="playlist" :videos="videos"></PlaylistCreator>
+    <Play v-if="playing"></Play>
   </div>
 </template>
 
@@ -14,6 +15,7 @@
 
 import PlaylistForm from './PlaylistForm'
 import PlaylistCreator from './PlaylistCreator'
+import Play from './Play'
 // import Loader from './Loader'
 
 export default {
@@ -23,12 +25,14 @@ export default {
         first: true,
         playlist: null,
         creation: false,
-        videos: []
+        videos: [],
+        playing: false
       }
     },
     components: {
       PlaylistForm,
-      PlaylistCreator
+      PlaylistCreator,
+      Play
     },
     methods: {
       returnHome () {
@@ -61,6 +65,10 @@ export default {
           .catch((response) => {
             console.log('NewPlaylist -> put error')
           })
+      },
+      play () {
+        this.playing = true;
+        this.creation = false;
       }
     }
 }

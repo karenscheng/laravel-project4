@@ -17,12 +17,15 @@ Route::get('/playlists', 'PlaylistController@index');
 Route::post('/playlists', 'PlaylistController@create');
 
 Route::get('/playlists/{id}', 'PlaylistController@show');
+Route::get('/edit/playlists/{id}', 'PlaylistController@show'); //permission for /edit route
 Route::put('/playlists/{id}', 'PlaylistController@update');
 Route::delete('/playlists/{id}', 'PlaylistController@destroy');
 
 Route::get('/videos', 'VideoController@index');
 Route::get('/playlists/{id}/videos', 'VideoController@view');
+Route::get('/edit/playlists/{id}/videos', 'VideoController@view');  //permission for /edit route
 Route::post('/playlists/{id}/videos', 'VideoController@create');
+Route::post('/edit/playlists/{id}/videos', 'VideoController@create'); //permission for /edit route
 
 Route::get('/videos/{id}', 'VideoController@show');
 Route::put('/videos/{id}', 'VideoController@update');

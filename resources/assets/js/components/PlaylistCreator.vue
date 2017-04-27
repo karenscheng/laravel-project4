@@ -9,7 +9,7 @@
         </form>
       </div>
       <img src="/edit.png" v-if="!editing" id="edit-btn" @click="editPlaylist"></img>
-      <button class="btn btn-main save">Save</button>
+      <button class="btn btn-main save" @click="play">Play</button>
     </div>
     <div class="overlay-panel">
       <h3>Add video to playlist</h3>
@@ -28,9 +28,6 @@
         <h3 v-if="videos.length == 0">Your playlist is currently empty.</h3>
         <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo"></PlaylistView>
       </div>
-      <!-- <div class="row">
-        <button class="btn btn-main">Save</button>
-      </div> -->
     </div>
   </div>
 </template>
@@ -83,13 +80,16 @@ export default {
       },
       editVideo(video) {
         console.log('PlaylistCreator -> edit' + video);
-        axios.put(`videos/${video.id}`)
-          .then((response) => {
-            console.log('PlaylistCreator -> put success');
-          })
-          .catch((error) => {
-            console.log('PlaylistCreator -> edit video error');
-          })
+        axios.put(`videos/${video.id}`, {
+          link: video.link,
+          name: video.name
+        })
+        .then((response) => {
+          console.log('PlaylistCreator -> put success: ' + response.data);
+        })
+        .catch((error) => {
+          console.log('PlaylistCreator -> edit video error');
+        })
       },
       editPlaylist() {
         this.$emit('edit');
@@ -114,6 +114,9 @@ export default {
           console.log('PlaylistCreator -> sendRequest error');
           this.error = true;
         });
+      },
+      play () {
+        this.$emit('play');
       }
   }
 }
