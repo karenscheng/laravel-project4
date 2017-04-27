@@ -30,6 +30,7 @@ Route::post('/edit/playlists/{id}/videos', 'VideoController@create'); //permissi
 Route::get('/videos/{id}', 'VideoController@show');
 Route::put('/videos/{id}', 'VideoController@update');
 Route::delete('/videos/{id}', 'VideoController@destroy');
+Route::delete('/edit/videos/{id}', 'VideoController@destroy');
 
 Route::get('/', function () {
     return view('app');
@@ -43,4 +44,10 @@ Route::get('/edit/{id}', function ($id) {
     $data = [];
     $playlist = $data['playlist'] = App\Playlist::find($id);
     return view('add', $data);
+});
+
+Route::get('/playlist/{id}', function ($id) {
+    $data = [];
+    $playlist = $data['playlist'] = App\Playlist::find($id);
+    return view('admin', $data);
 });

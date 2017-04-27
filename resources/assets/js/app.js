@@ -15,6 +15,7 @@ require('./bootstrap');
 
  Vue.component('app-index', require('./components/App.vue'));
  Vue.component('app-add', require('./components/Add.vue'));
+ Vue.component('app-edit', require('./components/Edit.vue'));
 
  const app = new Vue({
    el: '#app'

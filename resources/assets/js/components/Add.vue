@@ -5,18 +5,19 @@
       <a href="/" class="btn btn-main home">Home</a>
     </div>
     <div class="overlay-panel">
-      <h3>Add videos to Playlist "{{ this.playlistId }}"</h3>
+      <h3>Add videos to Playlist "{{ this.playlist.name }}"</h3>
       <div class="add-video">
         <form action="#" v-on:submit="add">
-          <input type="text" placeholder="Custom video name">
-          <input type="text" placeholder="Youtube video link">
+          <input type="text" placeholder="Custom video name" v-model="videoName">
+          <input type="text" placeholder="Youtube video link" v-model="link">
         </form>
       </div>
       <div class="row">
         <button class="btn btn-main" @click="add">Add Video</button>
       </div>
       <div class="playlistview-placeholder">
-        <h3>Videos in this playlist will appear here as soon as I figure out how this frkn axios call works :)</h3>
+        <h3 v-if="videos.length == 0">Your playlist is currently empty.</h3>
+        <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo" :admin="admin"></PlaylistView>
       </div>
     </div>
   </div>
@@ -25,13 +26,18 @@
 <script>
 
 import axios from 'axios';
+import PlaylistView from './PlaylistView';
 
 export default {
     data () {
       return {
         playlistId: window.playlist_id,
         videos: [],
-        playlist: null
+        playlist: null,
+        videoName: '',
+        link: '',
+        currentVideo: null,
+        admin: false
       }
     },
     created () {
@@ -40,31 +46,77 @@ export default {
       this.getVideos();
     },
     components: {
-      //optional
+      PlaylistView
     },
     methods: {
       add () {
         console.log ('Add.vue -> video add');
+        this.sendRequest();
+        this.videoName = '';
+        this.link = ''
+      },
+      sendRequest () {
+        axios.post(`/edit/playlists/${this.playlistId}/videos`, {
+          name: this.videoName,
+          link: this.link
+        })
+        .then((response) => {
+          console.log('Add -> post success');
+          console.log(response.data);
+          this.currentVideo = response.data;
+          this.success = true;
+          this.getVideos();
+        })
+        .catch((error) => {
+          console.log('Add -> sendRequest error');
+          this.error = true;
+        });
       },
       getPlaylist () {
-        axios.get(`playlists/${this.playlistId}`)
+        console.log('getPlaylist() - current playlist: ' + this.playlistId);
+        axios.get(`/edit/playlists/${this.playlistId}`)
           .then((response) => {
-            console.log('Add -> get playlist success: ' + reponse.data);
+            console.log('Add -> get playlist success: ' + response);
             this.playlist = response.data;
           })
           .catch((response) => {
-            console.log('Add -> get playlist error: ' + response.data);
+            console.log('Add -> get playlist error: ' + response);
           })
       },
       getVideos () {
-        axios.get(`playlists/${this.playlistId}/videos`)
+        console.log('getVideos() - current playlist: ' + this.playlistId);
+        axios.get(`/edit/playlists/${this.playlistId}/videos`)
           .then((response) => {
-            console.log('Add -> get videos success: ' + reponse.data);
+            console.log('Add -> get videos success: ' + response);
             this.videos = response.data;
           })
           .catch((response) => {
-            console.log('Add -> get videos error: ' + response.data);
+            console.log('Add -> get videos error: ' + response);
           })
+      },
+      remove (video) {
+        console.log('Add -> remove' + video);
+        axios.delete(`/edit/videos/${video.id}`)
+          .then((response) => {
+            console.log('Add -> video delete success' + response.data);
+            this.getVideos();
+          })
+          .catch((error) => {
+            console.log('Add -> delete video error');
+          })
+      },
+      editVideo (video) {
+        console.log('Add -> edit' + video);
+        axios.put(`videos/${video.id}`, {
+          link: video.link,
+          name: video.name
+        })
+        .then((response) => {
+          console.log('PlaylistCreator -> put success: ' + response.data);
+        })
+        .catch((error) => {
+          console.log('PlaylistCreator -> edit video error');
+        })
       }
     }
 }
@@ -193,5 +245,10 @@ form input {
   overflow-y: scroll;
   position: relative;
 }
+
+.playlistview {
+  margin-bottom: 5px
+}
+
 
 </style>

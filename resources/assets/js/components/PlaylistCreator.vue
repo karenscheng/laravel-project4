@@ -26,7 +26,7 @@
       </div>
       <div class="playlistview-placeholder">
         <h3 v-if="videos.length == 0">Your playlist is currently empty.</h3>
-        <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo"></PlaylistView>
+        <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo" :admin="admin"></PlaylistView>
       </div>
     </div>
   </div>
@@ -49,7 +49,17 @@ export default {
         tag: null,
         firstScriptTag: null,
         currentVideo: null,
-        editing: false
+        editing: false,
+        admin: true,
+        playlistId: window.playlist_id,
+        fromAdmin: window.fromAdmin
+      }
+    },
+    created () {
+      console.log('PlaylistCreator -> created. playlistId & fromAdmin: ' + this.playlistId + ' ' + this.fromAdmin);
+      if (this.fromAdmin) {
+        this.getPlaylist();
+        this.getVideos();
       }
     },
     props: [
@@ -92,11 +102,20 @@ export default {
         })
       },
       editPlaylist() {
-        this.$emit('edit');
+        // this.$emit('edit', this.playlist);
         this.editing = true;
       },
       doneEditing(){
         this.editing = false;
+        axios.put(`/playlists/${this.playlist.id}`, {
+          name: this.playlist.name,
+        })
+        .then((response) => {
+          console.log('NewPlaylist -> put success')
+        })
+        .catch((response) => {
+          console.log('NewPlaylist -> put error')
+        })
       },
       sendRequest () {
         axios.post(`playlists/${this.playlist.id}/videos`, {
@@ -114,6 +133,28 @@ export default {
           console.log('PlaylistCreator -> sendRequest error');
           this.error = true;
         });
+      },
+      getPlaylist () {
+        console.log('getPlaylist() - current playlist: ' + this.playlistId);
+        axios.get(`/playlists/${this.playlistId}`)
+          .then((response) => {
+            console.log('Add -> get playlist success: ' + response);
+            this.playlist = response.data;
+          })
+          .catch((response) => {
+            console.log('Add -> get playlist error: ' + response);
+          })
+      },
+      getVideos () {
+        console.log('getVideos() - current playlist: ' + this.playlistId);
+        axios.get(`/playlists/${this.playlistId}/videos`)
+          .then((response) => {
+            console.log('Add -> get videos success: ' + response);
+            this.videos = response.data;
+          })
+          .catch((response) => {
+            console.log('Add -> get videos error: ' + response);
+          })
       },
       play () {
         this.$emit('play');

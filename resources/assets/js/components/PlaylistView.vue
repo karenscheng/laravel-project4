@@ -1,7 +1,7 @@
 <template>
   <div class="playlistview">
     <div class="videoBox">
-      <div class="delete-btn">
+      <div v-if="admin" class="delete-btn">
         <img src="/delete.png" @click="remove"></img>
       </div>
       <div class="vertical-flex">
@@ -46,7 +46,8 @@ export default {
       console.log(this.modifiedLink);
     },
     props: [
-      'currentVideo'
+      'currentVideo',
+      'admin'
     ],
     methods: {
       parseLink (url) {

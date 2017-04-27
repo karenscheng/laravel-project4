@@ -6,7 +6,7 @@
       </button>
       <PlaylistForm @created="created"></PlaylistForm>
     </div>
-    <PlaylistCreator @goFetch="fetch" @edit="edit" @play="play" v-if="creation" :playlist="playlist" :videos="videos"></PlaylistCreator>
+    <PlaylistCreator @goFetch="fetch" @play="play" v-if="creation" :playlist="playlist" :videos="videos"></PlaylistCreator>
     <Play v-if="playing"></Play>
   </div>
 </template>
@@ -56,17 +56,6 @@ export default {
           .catch((response) => {
             console.log('NewPlaylist -> fetch error');
           })
-      },
-      edit () {
-        axios.put(`/playlist/${this.playlist.id}`, {
-          name: this.playlist.name,
-        })
-        .then((response) => {
-          console.log('NewPlaylist -> put success')
-        })
-        .catch((response) => {
-          console.log('NewPlaylist -> put error')
-        })
       },
       play () {
         this.playing = true;
