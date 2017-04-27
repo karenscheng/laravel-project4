@@ -4,10 +4,10 @@
       <button class="btn-main" @click="returnHome">
         <span>Cancel</span>
       </button>
-      <PlaylistForm @created="created"></PlaylistForm>
+      <PlaylistForm @created="made"></PlaylistForm>
     </div>
-    <PlaylistCreator @goFetch="fetch" @play="play" v-if="creation" :playlist="playlist" :videos="videos"></PlaylistCreator>
-    <Play v-if="playing"></Play>
+    <PlaylistCreator @play="play" v-if="creation" :playlistId="playlistId"></PlaylistCreator>
+    <Play v-if="playing" @edit="edit" :playlistId="playlistId" :videos="videos"></Play>
   </div>
 </template>
 
@@ -25,8 +25,10 @@ export default {
         first: true,
         playlist: null,
         creation: false,
-        videos: [],
-        playing: false
+        playing: false,
+        fromAdmin: window.fromAdmin,
+        videos: null,
+        playlistId: null
       }
     },
     components: {
@@ -34,32 +36,32 @@ export default {
       PlaylistCreator,
       Play
     },
+    created () {
+      console.log('NewPlaylist -> created. playlistId & fromAdmin: ' + this.playlistId + ' ' + this.fromAdmin);
+      if (this.fromAdmin) {
+        this.playlistId = window.playlist_id;
+        this.creation = true;
+        this.first = false;
+      }
+    },
     methods: {
-      returnHome () {
-        this.$emit("goHome")
-      },
-      created (playlist) {
-        this.playlist = playlist;
-        this.loading = true;
-        this.loading = false;
+      made (playlistId) {
+        this.playlistId = playlistId;
         this.first = false;
         this.creation = true;
       },
-      fetch (video) {
-        // console.log('NewPlaylist->fetch: playlist_id ' + video.playlist_id);
-        axios.get(`/playlists/${video.playlist_id}/videos`)
-          .then((response) => {
-            console.log('NewPlaylist -> fetch response.data: ' + response.data);
-            this.videos = response.data;
-            console.log(this.videos);
-          })
-          .catch((response) => {
-            console.log('NewPlaylist -> fetch error');
-          })
+      returnHome () {
+        this.$emit("goHome")
       },
-      play () {
+      play (videos, playlistId) {
+        this.videos = videos;
+        this.playlistId = playlistId;
         this.playing = true;
         this.creation = false;
+      },
+      edit () {
+        this.playing = false;
+        this.creation = true;
       }
     }
 }

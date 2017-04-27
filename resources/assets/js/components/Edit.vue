@@ -1,12 +1,12 @@
 <template>
   <div id="edit">
-    <PlaylistCreator></PlaylistCreator>
+    <NewPlaylist></NewPlaylist>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import PlaylistCreator from './PlaylistCreator';
+import NewPlaylist from './NewPlaylist';
 
 export default {
     data () {
@@ -17,7 +17,7 @@ export default {
         console.log('Component mounted.')
     },
     components: {
-      PlaylistCreator
+      NewPlaylist
     }
 }
 </script>

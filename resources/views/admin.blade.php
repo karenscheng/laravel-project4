@@ -7,7 +7,7 @@
 
         <title>Crowdplay</title>
 
-        <!-- Fonts -->
+        <script src="https://www.youtube.com/iframe_api"></script>
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">

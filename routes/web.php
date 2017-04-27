@@ -17,6 +17,7 @@ Route::get('/playlists', 'PlaylistController@index');
 Route::post('/playlists', 'PlaylistController@create');
 
 Route::get('/playlists/{id}', 'PlaylistController@show');
+Route::get('/playlist/playlists/{id}', 'PlaylistController@show'); //admin permission
 Route::get('/edit/playlists/{id}', 'PlaylistController@show'); //permission for /edit route
 Route::put('/playlists/{id}', 'PlaylistController@update');
 Route::delete('/playlists/{id}', 'PlaylistController@destroy');
@@ -34,7 +35,7 @@ Route::put('/videos/{id}', 'VideoController@update'); //edit video name
 Route::put('/playlist/videos/{id}', 'VideoController@update');  //admin view permission
 Route::put('/edit/videos/{id}', 'VideoController@update');  //permission for /edit route
 Route::delete('/videos/{id}', 'VideoController@destroy');
-Route::delete('/videos/{id}', 'VideoController@destroy');
+Route::delete('/playlist/videos/{id}', 'VideoController@destroy');  //admin permission
 // Route::delete('/edit/videos/{id}', 'VideoController@destroy');
 
 Route::get('/', function () {

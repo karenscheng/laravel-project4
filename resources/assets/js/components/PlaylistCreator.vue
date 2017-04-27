@@ -51,20 +51,17 @@ export default {
         currentVideo: null,
         editing: false,
         admin: true,
-        playlistId: window.playlist_id,
-        fromAdmin: window.fromAdmin
+        videos: [],
+        playlist: null
       }
     },
     created () {
-      console.log('PlaylistCreator -> created. playlistId & fromAdmin: ' + this.playlistId + ' ' + this.fromAdmin);
-      if (this.fromAdmin) {
-        this.getPlaylist();
-        this.getVideos();
-      }
+
+      this.getPlaylist();
+      this.fetch(this.playlistId);
     },
     props: [
-      'playlist',
-      'videos'
+      'playlistId',
     ],
 
     components: {
@@ -82,10 +79,22 @@ export default {
         axios.delete(`videos/${video.id}`)
           .then((response) => {
             console.log('PlaylistCreator -> video delete success' + response.data);
-            this.$emit('goFetch', response.data)
+            this.fetch(video.playlist_id);
           })
           .catch((error) => {
             console.log('PlaylistCreator -> delete video error');
+          })
+      },
+      fetch (id) {
+        // console.log('NewPlaylist->fetch: playlist_id ' + video.playlist_id);
+        axios.get(`/playlists/${id}/videos`)
+          .then((response) => {
+            console.log('NewPlaylist -> fetch response.data: ' + response.data);
+            this.videos = response.data;
+            console.log(this.videos);
+          })
+          .catch((response) => {
+            console.log('NewPlaylist -> fetch error');
           })
       },
       editVideo(video) {
@@ -127,7 +136,7 @@ export default {
           console.log(response.data);
           this.currentVideo = response.data;
           this.success = true;
-          this.$emit('goFetch', response.data);
+          this.fetch(response.data.playlist_id);
         })
         .catch((error) => {
           console.log('PlaylistCreator -> sendRequest error');
@@ -136,7 +145,7 @@ export default {
       },
       getPlaylist () {
         console.log('getPlaylist() - current playlist: ' + this.playlistId);
-        axios.get(`/playlists/${this.playlistId}`)
+        axios.get(`playlists/${this.playlistId}`)
           .then((response) => {
             console.log('Add -> get playlist success: ' + response);
             this.playlist = response.data;
@@ -145,19 +154,8 @@ export default {
             console.log('Add -> get playlist error: ' + response);
           })
       },
-      getVideos () {
-        console.log('getVideos() - current playlist: ' + this.playlistId);
-        axios.get(`/playlists/${this.playlistId}/videos`)
-          .then((response) => {
-            console.log('Add -> get videos success: ' + response);
-            this.videos = response.data;
-          })
-          .catch((response) => {
-            console.log('Add -> get videos error: ' + response);
-          })
-      },
       play () {
-        this.$emit('play');
+        this.$emit('play', this.videos, this.playlistId);
       }
   }
 }
@@ -308,11 +306,8 @@ form input {
   margin-top: 10px;
   height: 45vh;
   width: 80vw;
+  padding-top: 10px;
   background-color: rgba(255, 255, 255, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   overflow-y: scroll;
   position: relative;
 }

@@ -45,12 +45,12 @@ export default {
         })
         .then((response) => {
           console.log('PlaylistForm -> sendRequest success');
-          console.log(response.data);
+          console.log('playlist id: ' + response.data.id);
           this.loading = false;
           this.success = true;
           // this.playlist = response.data;
           this.reset();
-          this.$emit('created', response.data);
+          this.$emit('created', response.data.id);
           this.name = '';
         })
         .catch((error) => {
