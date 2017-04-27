@@ -58,13 +58,15 @@ export default {
           })
       },
       edit () {
-        axios.put(`/playlist/${this.playlist.id}`)
-          .then((response) => {
-            console.log('NewPlaylist -> put success')
-          })
-          .catch((response) => {
-            console.log('NewPlaylist -> put error')
-          })
+        axios.put(`/playlist/${this.playlist.id}`, {
+          name: this.playlist.name,
+        })
+        .then((response) => {
+          console.log('NewPlaylist -> put success')
+        })
+        .catch((response) => {
+          console.log('NewPlaylist -> put error')
+        })
       },
       play () {
         this.playing = true;
