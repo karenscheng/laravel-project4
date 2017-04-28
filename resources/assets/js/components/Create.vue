@@ -1,5 +1,5 @@
 <template>
-  <div class="homepage">
+  <div class="create">
     <div class="normal-view">
       <div class="video-container">
           <div class="filter"></div>
@@ -11,34 +11,24 @@
               <img :src="imgSrc" alt="">
           </div>
       </div>
-      <div class="overlay" v-if="normal">
-        <div class="title">
-          <h1>Welcome to Crowdplay</h1>
-          <button @click="createPlaylist" class="btn-main create-btn arrow-right">
-            <span>Create a new playlist</span>
-          </button>
-          <button class="btn-info" id="info" @click="info">
-            <span>What is Crowdplay?</span>
-          </button>
-          <div class="credits">
-            <a href="/styleguide" class="credit-entry">Styleguide</a>
-            <a href="http://karenscheng.com/" target="_newtab" class="credit-entry">Portfolio</a>
-            <a href="https://github.com/karenscheng" target="_newtab" class="credit-entry">Github</a>
-            <a href="#" target="_newtab" class="credit-entry">Credits</a>
-          </div>
+      <div class="overlay">
+        <div class="backdrop">
+          <h1>Create a New Playlist</h1>
+          <form action="#" v-on:submit="create">
+            <input type="text" placeholder="Playlist Name" v-model="name" />
+          </form>
+          <p class="boo" v-if="error">Error: Playlist could not be created</p>
+          <p class="yay" v-if="success">Playlist created!</p>
+          <button class="btn btn-main" @click="create" :disabled="loading">Create Playlist</button>
         </div>
       </div>
-      <Info class="overlay" v-if="infoMode" @goHome="normalView"></Info>
-      <NewPlaylist class="overlay" v-if="formMode" @goHome="normalView"></NewPlaylist>
     </div>
   </div>
 </template>
 
 <script>
 
-import Info from './Info'
-import NewPlaylist from './NewPlaylist'
-import axios from 'axios'
+//imports here
 
 export default {
     data () {
@@ -46,9 +36,10 @@ export default {
         videoSrc: "./Bokeh-Tov.mp4",
         webmSrc: "./Bokeh-Tov.webm",
         imgSrc: "./Bokeh-Tov.jpg",
-        normal: true,
-        infoMode: false,
-        formMode: false
+        name: '',
+        loading: false,
+        error: false,
+        success: false
       }
     },
     mounted() {
@@ -120,21 +111,37 @@ export default {
         // end of jQuery for video play
     },
     components: {
-      Info,
-      NewPlaylist
+      //optional
     },
     methods: {
-      info () {
-        this.normal = false
-        this.infoMode = true
+      create () {
+        console.log('Create -> create');
+        if (this.loading) {
+          alert('request is already being made');
+          return false;
+        }
+        this.loading = true;
+        this.sendRequest();
       },
-      normalView () {
-        this.infoMode = false
-        this.formMode = false
-        this.normal = true
-      },
-      createPlaylist () {
-        window.location = `/create`
+      sendRequest () {
+        axios.post('/playlists', {
+          name: this.name,
+        })
+        .then((response) => {
+          console.log('Create -> sendRequest success');
+          console.log('playlist id: ' + response.data.id);
+          this.loading = false;
+          this.success = true;
+          // this.playlist = response.data;
+          // this.reset();
+          this.name = '';
+          window.location = `/playlist/${response.data.id}`;
+        })
+        .catch((error) => {
+          console.error('ContactForm -> sendRequest error');
+          this.loading = false;
+          this.error = true;
+        });
       }
     }
 }
@@ -143,9 +150,22 @@ export default {
 
 <style scoped>
 
-.homepage, .normal-view {
+.create, .normal-view {
   height: 100vh;
   width: 100vw;
+  /*display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;*/
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .homepage-hero-module {
@@ -204,45 +224,6 @@ export default {
   width: 100vw;
 }
 
-h1 {
-  font-family: "Lobster Two";
-  color: #ffd7af;
-  font-weight: 300;
-  font-style: normal;
-  font-size: 72px;
-  cursor: default;
-}
-
-.btn-info {
-  border: 3px solid #ffd7af;
-  color: 	#ffd7af;
-  overflow: hidden;
-  background: #ffd7af;
-  cursor: pointer;
-  padding: 10px 30px;
-  display: inline-block;
-  margin: 30px 15px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 500;
-  outline: none;
-  position: relative;
-  transition: all 0.3s;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-}
-
-.btn-info span {
-  color: rgba(0, 0, 0, .7);
-  font-family: "Open Sans", sans-serif;
-}
-
-.btn-info:hover {
-  background: rgba(255,	215,175, 0.3);
-  border: 3px solid #ffd7af;
-  color: white;
-}
-
 .btn-main {
   border-radius: 50px;
   border: 3px solid #ffd7af;
@@ -267,32 +248,49 @@ h1 {
   background: rgba(255,	215, 175, 0.1);
 }
 
-#info {
-  cursor: pointer;
-  color: white;
-  font-family: "Open Sans", sans-serif;
+.boo {
+  color: red
 }
 
-#styleguide {
-  cursor: pointer;
+.yay {
+  color: green
 }
 
-.credits {
-  margin-top: 30px;
-  margin-bottom: -20px;
+h1 {
+  font-family: "Lobster Two";
+  color: #ffd7af;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 72px;
+  cursor: default;
+}
+
+input {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  width: 40vw;
+  background-color: transparent;
+  color: #eeeeee;
+  outline: none;
+  outline-style: none;
+  outline-offset: 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid #eeeeee 1px;
+  padding: 3px 10px;
+  font-size: 24px;
+}
+
+.backdrop {
+  background-color: rgba(0, 0, 0, .5);
+  height: 90vh;
+  width: 90vw;
+  padding: 20px;
   display: flex;
-  width: 30vw;
-  justify-content: space-between;
-}
-
-.credit-entry {
-  color: white;
-  text-decoration: none;
-}
-
-.styleguide:hover {
-  color: white;
-  text-decoration: underline;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 </style>

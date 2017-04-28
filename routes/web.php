@@ -46,6 +46,10 @@ Route::get('/styleguide', function () {
     return view('styleguide');
 });
 
+Route::get('/create', function () {
+    return view('create');
+});
+
 Route::get('/edit/{id}', function ($id) { // route for a user to add videos to existing playlist
     $data = [];
     $playlist = $data['playlist'] = App\Playlist::find($id);

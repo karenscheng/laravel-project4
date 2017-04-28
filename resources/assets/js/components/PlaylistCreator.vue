@@ -167,7 +167,7 @@ export default {
           })
       },
       playlistForm () {
-        console.log('take me to playlist form');
+        window.location = '/create';
       },
       play () {
         this.$emit('play', this.videos, this.playlistId);

@@ -4,16 +4,14 @@
       <button class="btn-main" @click="returnHome">
         <span>Cancel</span>
       </button>
-      <PlaylistForm @created="made"></PlaylistForm>
     </div>
-    <PlaylistCreator @play="play" v-if="creation" :playlistId="playlistId"></PlaylistCreator>
+    <PlaylistCreator @formTime="showForm" @play="play" v-if="creation" :playlistId="playlistId"></PlaylistCreator>
     <Play v-if="playing" @edit="edit" :playlistId="playlistId"></Play>
   </div>
 </template>
 
 <script>
 
-import PlaylistForm from './PlaylistForm'
 import PlaylistCreator from './PlaylistCreator'
 import Play from './Play'
 // import Loader from './Loader'
@@ -32,18 +30,15 @@ export default {
       }
     },
     components: {
-      PlaylistForm,
       PlaylistCreator,
       Play
     },
     created () {
       console.log('NewPlaylist -> created. playlistId & fromAdmin: ' + this.playlistId + ' ' + this.fromAdmin);
       if (this.fromAdmin) { //coming from admin view
-        this.creation = true;
-        this.first = false;
+        this.showPlaylist();
       } else {
-        this.first = true;
-        this.creation = false;
+        this.showForm();
       }
     },
     methods: {
@@ -63,6 +58,13 @@ export default {
       edit () {
         this.playing = false;
         this.creation = true;
+      },
+      showForm () {
+        window.location = '/create'
+      },
+      showPlaylist () {
+        this.creation = true;
+        this.first = false;
       }
     }
 }
