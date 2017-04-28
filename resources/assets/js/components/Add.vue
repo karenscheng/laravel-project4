@@ -5,19 +5,29 @@
       <a href="/" class="btn btn-main home">Home</a>
     </div>
     <div class="overlay-panel">
-      <h3>Add videos to Playlist "{{ this.playlist.name }}"</h3>
-      <div class="add-video">
-        <form action="#" v-on:submit="add">
-          <input type="text" placeholder="Custom video name" v-model="videoName">
-          <input type="text" placeholder="Youtube video link" v-model="link">
-        </form>
-      </div>
-      <div class="row">
-        <button class="btn btn-main" @click="add">Add Video</button>
-      </div>
-      <div class="playlistview-placeholder">
-        <h3 v-if="videos.length == 0">Your playlist is currently empty.</h3>
-        <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo" :admin="admin"></PlaylistView>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 tall">
+            <h3>Add video to playlist</h3>
+            <form action="#" v-on:submit="add">
+              <input type="text" placeholder="Custom video name" v-model="videoName">
+              <input type="text" placeholder="Youtube video link" v-model="link">
+            </form>
+            <button class="btn btn-main" @click="add">Add Video</button>
+            <p class="boo" v-if="error">Error: Video could not be added</p>
+            <p class="yay" v-if="success">Video Added!</p>
+          </div>
+          <div class="col-md-6 tall">
+            <div class="light-background">
+              <div id="scroller" class="playlistview-placeholder">
+                <div class="flex-me" v-if="videos.length == 0">
+                  <h3>Your playlist is currently empty.</h3>
+                </div>
+                <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo" :admin="admin"></PlaylistView>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -233,17 +243,48 @@ form input {
   border-bottom: solid #eeeeee 1px;
 }
 
-.playlistview-placeholder {
-  margin-top: 10px;
-  height: 45vh;
-  width: 80vw;
-  background-color: rgba(255, 255, 255, 0.1);
+.container, .row {
+  height: 100%;
+  width: 100%;
+}
+
+.tall {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.light-background {
+  margin-top: 10px;
+  height: 80%;
+  width: 100%;
+  padding-top: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.playlistview-placeholder {
+  height: 95%;
+  width: 100%;
   overflow-y: scroll;
   position: relative;
+}
+
+.center-me {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-me {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .playlistview {
