@@ -1,6 +1,9 @@
 <template>
   <div class="playlistcreator">
     <div class="theme-panel">
+      <button class="btn-main new-playlist" @click="playlistForm">
+        <span>Create New Playlist</span>
+      </button>
       <h2 v-if="!editing">Edit playlist "<span class="white">{{ this.playlist.name }}</span>"</h2>
       <div v-if="editing" class="edit-div">
         <h2>Edit playlist</h2>
@@ -9,26 +12,34 @@
         </form>
       </div>
       <img src="/edit.png" v-if="!editing" id="edit-btn" @click="editPlaylist"></img>
-      <button class="btn btn-main save" @click="play">Play</button>
     </div>
     <div class="overlay-panel">
-      <h3>Add video to playlist</h3>
-      <div class="row">
-        <form action="#" v-on:submit="add">
-          <input type="text" placeholder="Custom video name" v-model="videoName">
-          <input type="text" placeholder="Youtube video link" v-model="link">
-        </form>
-      </div>
-      <p class="boo" v-if="error">Error: Video could not be added</p>
-      <!-- <p class="yay" v-if="success">Video added!</p> -->
-      <div class="row">
-        <button class="btn btn-main" @click="add">Add Video</button>
-      </div>
-      <div class="playlistview-placeholder">
-        <div class="flex-me" v-if="videos.length == 0">
-          <h3>Your playlist is currently empty.</h3>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 tall">
+            <h3>Add video to playlist</h3>
+            <form action="#" v-on:submit="add">
+              <input type="text" placeholder="Custom video name" v-model="videoName">
+              <input type="text" placeholder="Youtube video link" v-model="link">
+            </form>
+            <button class="btn btn-main" @click="add">Add Video</button>
+            <p class="boo" v-if="error">Error: Video could not be added</p>
+            <p class="yay" v-if="success">Video Added!</p>
+          </div>
+          <div class="col-md-6 tall">
+            <div class="light-background">
+              <div id="scroller" class="playlistview-placeholder">
+                <div class="flex-me" v-if="videos.length == 0">
+                  <h3>Your playlist is currently empty.</h3>
+                </div>
+                <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo" :admin="admin"></PlaylistView>
+              </div>
+              <div class="center-me">
+                <button class="btn btn-main play" @click="play">Play</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo" :admin="admin"></PlaylistView>
       </div>
     </div>
   </div>
@@ -155,6 +166,9 @@ export default {
             console.log('Add -> get playlist error: ' + response);
           })
       },
+      playlistForm () {
+        console.log('take me to playlist form');
+      },
       play () {
         this.$emit('play', this.videos, this.playlistId);
       }
@@ -275,14 +289,23 @@ form input {
   font-size: 12px;
 }
 
-.save {
+.play {
+  margin: 0;
+  position: absolute;
+  bottom: 10px;
+  /*right: 200px;*/
+  padding: 10px 25px;
+  font-size: 24px;
+  /*align-self: flex-end;*/
+}
+
+.new-playlist {
   margin: 0;
   position: absolute;
   top: 30px;
-  right: 200px;
+  left: 50px;
   padding: 10px 25px;
   font-size: 16px;
-  /*align-self: flex-end;*/
 }
 
 .btn-main:hover {
@@ -296,21 +319,46 @@ form input {
 }
 
 .boo {
-  color: red
+  color: red;
 }
 
 .yay {
-  color: green
+  color: green;
+}
+
+.container, .row {
+  height: 100%;
+  width: 100%;
+}
+
+.tall {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.light-background {
+  margin-top: 10px;
+  height: 80%;
+  width: 100%;
+  padding-top: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  position: relative;
 }
 
 .playlistview-placeholder {
-  margin-top: 10px;
-  height: 45vh;
-  width: 80vw;
-  padding-top: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
+  height: 80%;
+  width: 100%;
   overflow-y: scroll;
   position: relative;
+}
+
+.center-me {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex-me {

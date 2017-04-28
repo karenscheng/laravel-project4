@@ -109,7 +109,7 @@ h2 {
   margin: 0;
   position: absolute;
   top: 30px;
-  left: 200px;
+  left: 150px;
   padding: 10px 25px;
   font-size: 16px;
   /*align-self: flex-end;*/

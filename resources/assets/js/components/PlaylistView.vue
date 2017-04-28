@@ -76,10 +76,10 @@ export default {
 
 .videoBox {
   display: flex;
-  width: 80vw;
+  /*width: 80vw;*/
   justify-content: center;
   position: relative;
-  margin-left: -150px;
+  margin-left: -250px;
 }
 
 .vertical-flex {
@@ -96,7 +96,7 @@ export default {
   /*margin-top: 20px;*/
   justify-content: center;
   position: absolute;
-  left: 700px;
+  left: 600px;
 }
 
 img {

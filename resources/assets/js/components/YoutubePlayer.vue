@@ -1,7 +1,19 @@
 <template>
 <div class="YoutubePlayer">
-  <h3>Currently playing: "{{ this.name }}"</h3>
-  <div :id="this.youtubeid"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 left nopadding center">
+        <h3>Previous Video: </h3>
+      </div>
+      <div class="col-md-6 middle nopadding center">
+        <h3>Currently playing: "{{ this.name }}"</h3>
+        <div class="video-player" :id="this.youtubeid"></div>
+      </div>
+      <div class="col-md-3 right nopadding center">
+        <h3>Next Video: </h3>
+      </div>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -39,8 +51,8 @@ export default {
       console.log(`Youtube ${this.youtubeid} -> render.`)
       console.log(window.YT);
       this.el = new window.YT.Player(this.youtubeid, {
-        height: '100%',
-        width: '100%',
+        height: '312px',
+        width: '512px',
         videoId: this.youtubeid,
         playerVars: {
           autoplay: 1,
@@ -93,6 +105,16 @@ export default {
 
 <style scoped>
 
+.container {
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 70vh;
+  width: 90vw;
+}
+
+.row {
+  height: 100%
+}
+
 h3 {
   font-family: "Open Sans";
   color: white;
@@ -102,9 +124,22 @@ h3 {
 
 .YoutubePlayer {
   margin-top: 50px;
-  height: 312px;
-  width: 512px;
+  /*height: 312px;
+  width: 512px;*/
   /*background-color: rgba(0, 0, 0, 0.7);*/
 }
 
+.nopadding {
+  padding: 0;
+  margin: 0
+}
+
+.center {
+  height: 100%;
+  /*width: 100%;*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 </style>
