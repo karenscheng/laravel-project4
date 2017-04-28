@@ -1,28 +1,31 @@
 <template>
+  <!-- Add.vue is the only unique component to a user adding to a playlist  -->
   <div class="add">
     <div class="theme-panel">
       <h1>Contribute To Playlist</h1>
       <a href="/" class="btn btn-main home">Home</a>
     </div>
-    <div class="overlay-panel">
+    <div class="overlay-panel"> <!-- everything with the black background-->
       <div class="container">
         <div class="row">
-          <div class="col-md-6 tall">
+          <div class="col-md-6 tall"> <!-- left form -->
             <h3>Add video to playlist</h3>
             <form action="#" v-on:submit="add">
               <input type="text" placeholder="Custom video name" v-model="videoName">
               <input type="text" placeholder="Youtube video link" v-model="link">
             </form>
             <button class="btn btn-main" @click="add">Add Video</button>
+            <!-- feedback for what's going on because sometimes there's a lag -->
             <p class="boo" v-if="error">Error: Video could not be added</p>
             <p class="yay" v-if="success">Video Added!</p>
           </div>
-          <div class="col-md-6 tall">
+          <div class="col-md-6 tall"> <!-- right list of videos -->
             <div class="light-background">
               <div id="scroller" class="playlistview-placeholder">
                 <div class="flex-me" v-if="videos.length == 0">
-                  <h3>Your playlist is currently empty.</h3>
+                  <h3>Your playlist is currently empty.</h3> <!-- will appear if there are no videos -->
                 </div>
+                <!-- shows playlist and form to add -->
                 <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo" :admin="admin"></PlaylistView>
               </div>
             </div>
@@ -41,16 +44,16 @@ import PlaylistView from './PlaylistView';
 export default {
     data () {
       return {
-        playlistId: window.playlist_id,
-        videos: [],
-        playlist: null,
-        videoName: '',
-        link: '',
+        playlistId: window.playlist_id, // passed from add.blade file
+        videos: [], // populated in getVideos
+        playlist: null, // populated in getPlaylist
+        videoName: '',  // v-model in form field
+        link: '', // v-model in form field
         currentVideo: null,
-        admin: false
+        admin: false  // passed to playlistView so that delete button is not shown
       }
     },
-    created () {
+    created () {  // make axios calls to populate data
       console.log('current playlist: ' + this.playlistId);
       this.getPlaylist();
       this.getVideos();
@@ -65,7 +68,7 @@ export default {
         this.videoName = '';
         this.link = ''
       },
-      sendRequest () {
+      sendRequest () {  // called when user adds video
         axios.post(`/edit/playlists/${this.playlistId}/videos`, {
           name: this.videoName,
           link: this.link
@@ -75,7 +78,7 @@ export default {
           console.log(response.data);
           this.currentVideo = response.data;
           this.success = true;
-          this.getVideos();
+          this.getVideos();  // refreshes listview
         })
         .catch((error) => {
           console.log('Add -> sendRequest error');
@@ -87,7 +90,7 @@ export default {
         axios.get(`/edit/playlists/${this.playlistId}`)
           .then((response) => {
             console.log('Add -> get playlist success: ' + response);
-            this.playlist = response.data;
+            this.playlist = response.data;  // populates current playlist
           })
           .catch((response) => {
             console.log('Add -> get playlist error: ' + response);
@@ -98,7 +101,7 @@ export default {
         axios.get(`/edit/playlists/${this.playlistId}/videos`)
           .then((response) => {
             console.log('Add -> get videos success: ' + response);
-            this.videos = response.data;
+            this.videos = response.data;  // will then refresh listview since it's bound to videos
           })
           .catch((response) => {
             console.log('Add -> get videos error: ' + response);
@@ -109,7 +112,7 @@ export default {
         axios.delete(`/edit/videos/${video.id}`)
           .then((response) => {
             console.log('Add -> video delete success' + response.data);
-            this.getVideos();
+            this.getVideos(); // refresh listview
           })
           .catch((error) => {
             console.log('Add -> delete video error');
@@ -123,6 +126,7 @@ export default {
         })
         .then((response) => {
           console.log('PlaylistCreator -> put success: ' + response.data);
+          this.getVideos(); // refresh listview
         })
         .catch((error) => {
           console.log('PlaylistCreator -> edit video error');

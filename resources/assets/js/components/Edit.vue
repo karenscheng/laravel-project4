@@ -1,5 +1,6 @@
 <template>
   <div id="edit">
+    <!-- parent component for /edit route -->
     <NewPlaylist></NewPlaylist>
   </div>
 </template>

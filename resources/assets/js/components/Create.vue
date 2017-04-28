@@ -1,7 +1,8 @@
 <template>
+  <!-- this component is associated with the /create route -->
   <div class="create">
     <div class="normal-view">
-      <div class="video-container">
+      <div class="video-container"> <!-- video background exists here -->
           <div class="filter"></div>
           <video autoplay loop class="fillWidth">
               <source :src="videoSrc" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
@@ -11,8 +12,10 @@
               <img :src="imgSrc" alt="">
           </div>
       </div>
-      <div class="overlay">
-        <div class="backdrop">
+
+      <div class="overlay">   <!-- puts this div on top of video -->
+        <div class="backdrop"> <!-- black transparent background -->
+          <button class="btn btn-main cancel" @click="goHome">Cancel</button>
           <h1>Create a New Playlist</h1>
           <form action="#" v-on:submit="create">
             <input type="text" placeholder="Playlist Name" v-model="name" />
@@ -89,8 +92,6 @@ export default {
             videoWidth,
             videoHeight
 
-            // console.log(windowHeight)
-
             $(element).each(function(){
                 var videoAspectRatio = $(this).data('height')/$(this).data('width')
 
@@ -110,9 +111,6 @@ export default {
         }
         // end of jQuery for video play
     },
-    components: {
-      //optional
-    },
     methods: {
       create () {
         console.log('Create -> create');
@@ -124,7 +122,7 @@ export default {
         this.sendRequest();
       },
       sendRequest () {
-        axios.post('/playlists', {
+        axios.post('/playlists', {  // creates new playlist
           name: this.name,
         })
         .then((response) => {
@@ -132,16 +130,17 @@ export default {
           console.log('playlist id: ' + response.data.id);
           this.loading = false;
           this.success = true;
-          // this.playlist = response.data;
-          // this.reset();
           this.name = '';
-          window.location = `/playlist/${response.data.id}`;
+          window.location = `/playlist/${response.data.id}`;  // go to playlist admin route
         })
         .catch((error) => {
           console.error('ContactForm -> sendRequest error');
           this.loading = false;
           this.error = true;
         });
+      },
+      goHome () {
+        window.location = '/';
       }
     }
 }
@@ -153,10 +152,6 @@ export default {
 .create, .normal-view {
   height: 100vh;
   width: 100vw;
-  /*display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;*/
 }
 
 .overlay {
@@ -242,6 +237,14 @@ export default {
   transition: all 0.3s;
   font-family: "Open Sans", sans-serif;
   font-size: 24px;
+}
+
+.cancel {
+  font-size: 18px;
+  padding: 15px 30px;
+  position: absolute;
+  top: 15px;
+  left: 60px
 }
 
 .btn-main:hover {

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- This is the default component when you load up the app -->
     <Homepage></Homepage>
   </div>
 </template>

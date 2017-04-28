@@ -1,5 +1,6 @@
 <template>
   <div class="credits">
+    <!-- Project credits -->
     <div class="text">
       <h1>Credits</h1>
       <div class="panel">

@@ -1,7 +1,8 @@
 <template>
   <div class="homepage">
+    <!-- loads when you access the home route -->
     <div class="normal-view">
-      <div class="video-container">
+      <div class="video-container"> <!-- video background -->
           <div class="filter"></div>
           <video autoplay loop class="fillWidth">
               <source :src="videoSrc" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
@@ -11,7 +12,7 @@
               <img :src="imgSrc" alt="">
           </div>
       </div>
-      <div class="overlay" v-if="normal">
+      <div class="overlay" v-if="normal"> <!-- puts this div on top of video -->
         <div class="title">
           <h1>Welcome to Crowdplay</h1>
           <button @click="createPlaylist" class="btn-main create-btn arrow-right">
@@ -28,9 +29,8 @@
           </div>
         </div>
       </div>
-      <Credits class="overlay" v-if="creditsMode" @goHome="normalView"></Credits>
-      <Info class="overlay" v-if="infoMode" @goHome="normalView"></Info>
-      <NewPlaylist class="overlay" v-if="formMode" @goHome="normalView"></NewPlaylist>
+      <Credits class="overlay" v-if="creditsMode" @goHome="normalView"></Credits> <!-- loads when you click "credits" -->
+      <Info class="overlay" v-if="infoMode" @goHome="normalView"></Info> <!-- loads when you click "what is crowdplay?" -->
     </div>
   </div>
 </template>
@@ -38,7 +38,6 @@
 <script>
 
 import Info from './Info'
-import NewPlaylist from './NewPlaylist'
 import Credits from './Credits'
 import axios from 'axios'
 
@@ -124,7 +123,6 @@ export default {
     },
     components: {
       Info,
-      NewPlaylist,
       Credits
     },
     methods: {
