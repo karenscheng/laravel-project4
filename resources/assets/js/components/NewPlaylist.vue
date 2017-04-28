@@ -38,8 +38,13 @@ export default {
     },
     created () {
       console.log('NewPlaylist -> created. playlistId & fromAdmin: ' + this.playlistId + ' ' + this.fromAdmin);
-      this.creation = true;
-      this.first = false;
+      if (this.fromAdmin) { //coming from admin view
+        this.creation = true;
+        this.first = false;
+      } else {
+        this.first = true;
+        this.creation = false;
+      }
     },
     methods: {
       made (playlistId) {
