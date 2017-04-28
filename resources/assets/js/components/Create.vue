@@ -139,7 +139,7 @@ export default {
           this.error = true;
         });
       },
-      goHome () {
+      goHome () { // runs when "cancel" is clicked
         window.location = '/';
       }
     }

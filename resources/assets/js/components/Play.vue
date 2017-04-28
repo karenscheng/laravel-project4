@@ -1,7 +1,8 @@
 <template>
   <div class="play">
-    <button class="btn btn-main edit" @click="edit">Edit</button>
+    <button class="btn btn-main edit" @click="edit">Edit</button> <!-- edit playlist name. calls edit -->
     <h2>Playing Playlist "{{ this.playlist.name }}"</h2>
+    <!-- TODO: when playlist is done playing, show prompt that says "play again" or "add more videos to playlist" -->
     <YoutubePlayer v-for="(video, i) in videos" v-if="index === i" :index="i" :link="video.link" :name="video.name" @done="nextVideo"></YoutubePlayer>
   </div>
 </template>
@@ -20,9 +21,9 @@ export default {
     },
     mounted () {
       console.log('Play -> playlistId: ' + this.playlistId);
-      this.fetch(this.playlistId);
+      this.fetch(this.playlistId);  // populates videos
       console.log('Play -> videos: ' + this.videos);
-      this.getPlaylist();
+      this.getPlaylist(); // populates playlist
     },
     props: [
       'playlistId'
@@ -32,8 +33,7 @@ export default {
     },
     methods: {
       fetch (id) {
-        // console.log('NewPlaylist->fetch: playlist_id ' + video.playlist_id);
-        axios.get(`/playlists/${id}/videos`)
+        axios.get(`/playlists/${id}/videos`)  // get all videos with playlistid
           .then((response) => {
             console.log('Play -> fetch response.data: ' + response.data);
             this.videos = response.data;
@@ -43,7 +43,7 @@ export default {
             console.log('Play -> fetch error');
           })
       },
-      getPlaylist () {
+      getPlaylist () {  // get playlist name
         console.log('getPlaylist() - current playlist: ' + this.playlistId);
         axios.get(`playlists/${this.playlistId}`)
           .then((response) => {
@@ -54,10 +54,10 @@ export default {
             console.log('Play -> get playlist error: ' + response);
           })
       },
-      edit () {
+      edit () { // parent executes playlist name change
         this.$emit('edit');
       },
-      nextVideo () {
+      nextVideo () {  // called when YoutubePlayer emits "done"
         this.index++;
       }
     }

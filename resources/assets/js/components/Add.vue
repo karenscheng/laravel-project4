@@ -25,7 +25,7 @@
                 <div class="flex-me" v-if="videos.length == 0">
                   <h3>Your playlist is currently empty.</h3> <!-- will appear if there are no videos -->
                 </div>
-                <!-- shows playlist and form to add -->
+                <!-- shows videos in playlist -->
                 <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo" :admin="admin"></PlaylistView>
               </div>
             </div>

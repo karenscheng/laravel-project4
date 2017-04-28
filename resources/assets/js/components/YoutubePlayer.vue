@@ -3,14 +3,16 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 left nopadding center">
-        <h3>Previous Video: </h3>
+        <!-- <h3>Previous Video: </h3> -->
+        <!-- will implement if I have time -->
       </div>
       <div class="col-md-6 middle nopadding center">
         <h3>Currently playing: "{{ this.name }}"</h3>
         <div class="video-player" :id="this.youtubeid"></div>
       </div>
       <div class="col-md-3 right nopadding center">
-        <h3>Next Video: </h3>
+        <!-- <h3>Next Video: </h3> -->
+        <!-- will implement if I have time -->
       </div>
     </div>
   </div>

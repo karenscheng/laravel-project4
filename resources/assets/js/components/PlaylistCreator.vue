@@ -1,14 +1,16 @@
 <template>
   <div class="playlistcreator">
     <div class="theme-panel">
-      <button class="btn-main new-playlist" @click="playlistForm">
+      <button class="btn-main new-playlist" @click="playlistForm"> <!-- takes you to /create route -->
         <span>Create New Playlist</span>
       </button>
       <h2 v-if="!editing">Edit playlist "<span class="white">{{ this.playlist.name }}</span>"</h2>
+      <!-- editing = true if you click the edit button -->
       <div v-if="editing" class="edit-div">
         <h2>Edit playlist</h2>
         <form action="#" v-on:submit="doneEditing">
           <input type="text" class="playlist-name" :placeholder="playlist.name" v-model="playlist.name">
+          <!-- will trigger axios put call -->
         </form>
       </div>
       <img src="/edit.png" v-if="!editing" id="edit-btn" @click="editPlaylist"></img>
@@ -16,25 +18,28 @@
     <div class="overlay-panel">
       <div class="container">
         <div class="row">
-          <div class="col-md-6 tall">
+          <div class="col-md-6 tall"> <!-- left form -->
             <h3>Add video to playlist</h3>
             <form action="#" v-on:submit="add">
               <input type="text" placeholder="Custom video name" v-model="videoName">
               <input type="text" placeholder="Youtube video link" v-model="link">
             </form>
             <button class="btn btn-main" @click="add">Add Video</button>
+            <!-- feedback for what's going on because sometimes there's a lag -->
             <p class="boo" v-if="error">Error: Video could not be added</p>
             <p class="yay" v-if="success">Video Added!</p>
           </div>
-          <div class="col-md-6 tall">
+          <div class="col-md-6 tall"> <!-- right list of videos -->
             <div class="light-background">
               <div id="scroller" class="playlistview-placeholder">
                 <div class="flex-me" v-if="videos.length == 0">
-                  <h3>Your playlist is currently empty.</h3>
+                  <h3>Your playlist is currently empty.</h3> <!-- will appear if there are no videos -->
                 </div>
+                <!-- shows videos in playlist -->
                 <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo" :admin="admin"></PlaylistView>
               </div>
               <div class="center-me">
+                <!-- goes to Play component -->
                 <button class="btn btn-main play" @click="play">Play</button>
               </div>
             </div>

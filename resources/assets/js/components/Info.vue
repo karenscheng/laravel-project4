@@ -1,5 +1,6 @@
 <template>
   <div id="info">
+    <!-- Instructions for app -->
     <div class="text">
       <h1>What is Crowdplay?</h1>
       <div class="panel">
@@ -26,7 +27,7 @@
 
 export default {
   methods: {
-    returnHome () {
+    returnHome () { // runs when "Return Home" is clicked
       this.$emit("goHome")
     }
   }
