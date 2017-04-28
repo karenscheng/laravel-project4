@@ -270,7 +270,7 @@ input {
   margin-bottom: 60px;
   width: 40vw;
   background-color: transparent;
-  color: #eeeeee;
+  color: white;
   outline: none;
   outline-style: none;
   outline-offset: 0;
@@ -280,6 +280,10 @@ input {
   border-bottom: solid #eeeeee 1px;
   padding: 3px 10px;
   font-size: 24px;
+}
+
+::-webkit-input-placeholder {
+  color: #FAEBD7;
 }
 
 .backdrop {

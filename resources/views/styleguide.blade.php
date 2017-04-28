@@ -72,11 +72,28 @@
           font-size: 18px;
         }
 
+        h5 {
+          font-family: 'Open Sans';
+          margin-bottom: 0;
+          color: black;
+          font-weight: 400;
+          font-size: 14px;
+        }
+
         p {
           font-family: 'Open Sans';
           color: white;
           margin-bottom: 0;
           font-weight: 200;
+        }
+
+        p.lead {
+          font-size: 18px;
+          font-weight: bold;
+        }
+
+        p.light {
+          font-weight: lighter;
         }
 
         hr {
@@ -123,6 +140,27 @@
           background: rgba(0, 0, 0, 0.2);
           cursor: pointer;
           padding: 25px 80px;
+          display: inline-block;
+          margin: 15px 15px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          font-weight: 500;
+          outline: none;
+          position: relative;
+          transition: all 0.3s;
+          font-family: "Open Sans", sans-serif;
+          font-size: 32px;
+          text-decoration: none;
+        }
+
+        .btn-med {
+          border-radius: 50px;
+          border: 3px solid #ffd7af;
+          color: 	#ffd7af;
+          overflow: hidden;
+          background: rgba(0, 0, 0, 0.2);
+          cursor: pointer;
+          padding: 15px 50px;
           display: inline-block;
           margin: 15px 15px;
           text-transform: uppercase;
@@ -312,6 +350,27 @@
           margin: 0;
         }
 
+        input {
+          margin-top: 60px;
+          margin-bottom: 60px;
+          width: 40vw;
+          background-color: transparent;
+          color: white;
+          outline: none;
+          outline-style: none;
+          outline-offset: 0;
+          border-top: none;
+          border-left: none;
+          border-right: none;
+          border-bottom: solid #eeeeee 1px;
+          padding: 3px 10px;
+          font-size: 24px;
+        }
+
+        ::-webkit-input-placeholder {
+          color: #FAEBD7;
+        }
+
         </style>
 
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
@@ -351,13 +410,16 @@
         <h2 class="center">Headings</h2>
         <hr>
         <h1>'h1' A Large Header (Lobster Two)</h1>
-        <h2 class="center">'h2' A Smaller Header (Lobster Two)</h1>
-        <h3 class="center">'h3' Even Smaller Header (Open Sans)</h1>
+        <h2 class="center">'h2' A Smaller Header (Lobster Two)</h2>
+        <h3 class="center">'h3' Even Smaller Header (Open Sans)</h3>
+        <h4 class="center">'h4' Even Smaller Header (Open Sans)</h4>
+        <h4 class="center">'h5' Smallest Header (Open Sans)</h5>
 
         <h2 class="center">Body Text</h2>
         <hr>
-        <h4 class="center">Some Large Text (Open Sans)</h1>
-        <p class="center">Some Smaller Text (Open Sans)</p>
+        <p class="center lead">p.lead Some Large Text (Open Sans)</h4>
+        <p class="center">p Some Text (Open Sans)</p>
+        <p class="center light">p.light Some Smaller Text (Open Sans)</p>
 
         <h2 class="center">Buttons</h2>
           <hr>
@@ -365,10 +427,21 @@
           <a href="#" class="btn btn-lg">Large Button</a>
         </div>
         <div class="row no-padding">
+          <a href="#" class="btn btn-med">Medium Button</a>
+        </div>
+        <div class="row no-padding">
           <a href="#" class="btn btn-primary">Small Button</a>
         </div>
         <div class="row">
           <a href="#" class="btn btn-sm"><span>Square Button</span></a>
+        </div>
+
+        <h2 class="center">Text Input</h2>
+        <hr>
+        <div class="row">
+          <form action="#">
+            <input type="text" placeholder="sample text input">
+          </form>
         </div>
       </div>
     </body>

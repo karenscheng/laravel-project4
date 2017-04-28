@@ -46,7 +46,7 @@ Route::get('/styleguide', function () {
     return view('styleguide');
 });
 
-Route::get('/create', function () {
+Route::get('/create', function () { // route to create playlist
     return view('create');
 });
 
