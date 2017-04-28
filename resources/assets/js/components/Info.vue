@@ -3,7 +3,17 @@
     <div class="text">
       <h1>What is Crowdplay?</h1>
       <div class="panel">
-        <p>It's lit 🔥</p>
+        <h3>Crowdplay is a tool that allows you to create a playlist of YouTube
+          videos, while allowing others contribute to the playlist on their own
+          devices. To get started, click "Create A New Playlist" on the homepage,
+          give your playlist a name (it can be changed later), add a few videos to
+          get started, and hit "play" to have your playlist autoplay.
+        </h3>
+        <h3>To have your friends contribute to the playlist, they can go to
+          /edit/{your playlist id here}, and you can get the playlist id from the
+          url bar by looking at the number here: /playlist/{id here}. Now no one
+          has to fight for the aux cord, because everyone's the DJ!
+        </h3>
       </div>
       <button class="btn-main" @click="returnHome">
         <span>Return Home</span>
@@ -53,17 +63,20 @@ h1 {
 .panel {
   margin-top: 15px;
   background-color: rgba(0, 0, 0, .5);
-  height: 40vh;
+  height: 50vh;
   width: 80vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 10px;
+  overflow-y: scroll;
 }
 
-.panel p {
-  font-size: 36px;
+.panel h3 {
+  font-family: 'Open Sans';
+  color: white;
+  line-height: 150%;
 }
 
 .btn-main {
