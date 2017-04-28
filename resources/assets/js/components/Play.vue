@@ -2,7 +2,7 @@
   <div class="play">
     <button class="btn btn-main edit" @click="edit">Edit</button>
     <h2>Playing Playlist "{{ this.playlist.name }}"</h2>
-    <YoutubePlayer v-for="(video, i) in videos" v-if="index === i" :index="i" :link="video.link"></YoutubePlayer>
+    <YoutubePlayer v-for="(video, i) in videos" v-if="index === i" :index="i" :link="video.link" :name="video.name" @done="nextVideo"></YoutubePlayer>
   </div>
 </template>
 
@@ -56,6 +56,9 @@ export default {
       },
       edit () {
         this.$emit('edit');
+      },
+      nextVideo () {
+        this.index++;
       }
     }
 }

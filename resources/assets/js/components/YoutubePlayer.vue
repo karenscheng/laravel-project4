@@ -1,5 +1,6 @@
 <template>
 <div class="YoutubePlayer">
+  <h3>Currently playing: "{{ this.name }}"</h3>
   <div :id="this.youtubeid"></div>
 </div>
 </template>
@@ -9,7 +10,8 @@ export default {
   name: 'YoutubePlayer',
   props: [
     'link',
-    'index'
+    'index',
+    'name'
   ],
   data () {
     return {
@@ -62,7 +64,6 @@ export default {
       if (this.loaded) return
       console.log(`Youtube ${this.youtubeid} -> Ready.`)
       this.loaded = true
-      this.el.play()
     },
     stateChanged (e) {
       console.log(`Youtube -> ${this.youtubeid} State changed ${e.data}.`)
@@ -90,6 +91,20 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
+
+h3 {
+  font-family: "Open Sans";
+  color: white;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.YoutubePlayer {
+  margin-top: 50px;
+  height: 312px;
+  width: 512px;
+  /*background-color: rgba(0, 0, 0, 0.7);*/
+}
 
 </style>
