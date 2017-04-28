@@ -191,9 +191,9 @@ export default {
     position: absolute;
 }
 .video-container .filter {
-    z-index: 100;
+    /*z-index: 100;*/
     position: absolute;
-    background: rgba(0, 0, 0, 0.4);
+    /*background: rgba(0, 0, 0, 0.4);*/
     width: 100%;
 }
 .video-container video {
@@ -298,6 +298,64 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+@media only screen and (max-width: 680px) {
+  h1 {
+    font-size: 64px;
+  }
+
+  .btn-main {
+    padding: 20px 60px;
+    margin: 30px 15px;
+    font-size: 20px;
+  }
+
+  input {
+    width: 60vw;
+  }
+}
+
+@media only screen and (max-width: 545px) {
+  h1{
+    font-size: 48px;
+  }
+
+  .btn-main {
+    padding: 20px 40px;
+    margin: 20px 10px;
+    font-size: 18px;
+  }
+
+  .cancel {
+    padding: 10px 20px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  input {
+    width: 80vw;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  h1{
+    font-size: 36px;
+  }
+
+  .cancel {
+    padding: 10px 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  input {
+    width: 80vw;
+  }
 }
 
 </style>

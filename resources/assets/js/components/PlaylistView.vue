@@ -150,4 +150,82 @@ form input {
   border-bottom: solid #eeeeee 1px;
 }
 
+@media only screen and (max-width: 1100px) {
+  .flexme {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*margin-top: 20px;*/
+    justify-content: center;
+    position: absolute;
+    left: 500px;
+  }
+
+}
+
+
+@media only screen and (max-width: 992px) {
+  h3 {
+    font-size: 16px;
+  }
+
+  .flexme {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*margin-top: 20px;*/
+    justify-content: center;
+    position: absolute;
+    left: 700px;
+  }
+}
+
+@media only screen and (max-width: 890px) {
+  h2{
+    font-family: "Lobster Two";
+    color: #ffd7af;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 48px;
+    cursor: default;
+    margin-top: 100px;
+  }
+}
+
+@media only screen and (max-width: 730px) {
+  .flexme {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*margin-top: 20px;*/
+    justify-content: center;
+    position: absolute;
+    left: 600px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .flexme {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*margin-top: 20px;*/
+    justify-content: center;
+    position: absolute;
+    left: 500px;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .flexme {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*margin-top: 20px;*/
+    justify-content: center;
+    position: absolute;
+    left: 450px;
+  }
+}
+
 </style>

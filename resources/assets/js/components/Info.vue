@@ -66,10 +66,6 @@ h1 {
   background-color: rgba(0, 0, 0, .5);
   height: 50vh;
   width: 80vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   padding: 10px;
   overflow-y: scroll;
 }
@@ -102,6 +98,44 @@ h1 {
 
 .btn-main:hover {
   background: rgba(255,	215,175, 0.1);
+}
+
+@media only screen and (max-width: 680px) {
+  h1 {
+    font-size: 64px;
+  }
+
+  .btn-main {
+    padding: 20px 60px;
+    margin: 30px 15px;
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 545px) {
+  h1{
+    font-size: 48px;
+  }
+
+  .btn-main {
+    padding: 20px 40px;
+    margin: 20px 10px;
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  h1{
+    font-size: 36px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
 }
 
 </style>

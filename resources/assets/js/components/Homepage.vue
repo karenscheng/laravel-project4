@@ -183,9 +183,9 @@ export default {
     position: absolute;
 }
 .video-container .filter {
-    z-index: 100;
+    /*z-index: 100;*/
     position: absolute;
-    background: rgba(0, 0, 0, 0.4);
+    /*background: rgba(0, 0, 0, 0.4);*/
     width: 100%;
 }
 .video-container video {
@@ -288,7 +288,7 @@ h1 {
   margin-top: 30px;
   margin-bottom: -20px;
   display: flex;
-  width: 30vw;
+  width: 60vw;
   justify-content: space-between;
 }
 
@@ -301,5 +301,37 @@ h1 {
   color: white;
   text-decoration: underline;
 }
+
+
+@media only screen and (max-width: 680px) {
+  h1 {
+    font-size: 64px;
+  }
+
+  .btn-main {
+    padding: 20px 60px;
+    margin: 30px 15px;
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 545px) {
+  h1{
+    font-size: 48px;
+  }
+
+  .btn-main {
+    padding: 20px 40px;
+    margin: 20px 10px;
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  h1{
+    font-size: 36px;
+  }
+}
+
 
 </style>

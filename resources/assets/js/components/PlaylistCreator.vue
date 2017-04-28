@@ -18,7 +18,7 @@
     <div class="overlay-panel">
       <div class="container">
         <div class="row">
-          <div class="col-md-6 tall"> <!-- left form -->
+          <div class="col-md-6 col-s-12 tall"> <!-- left form -->
             <h3>Add video to playlist</h3>
             <form action="#" v-on:submit="add">
               <input type="text" placeholder="Custom video name" v-model="videoName">
@@ -29,7 +29,7 @@
             <p class="boo" v-if="error">Error: Video could not be added</p>
             <p class="yay" v-if="success">Video Added!</p>
           </div>
-          <div class="col-md-6 tall"> <!-- right list of videos -->
+          <div class="col-md-6 col-s-12 tall"> <!-- right list of videos -->
             <div class="light-background">
               <div id="scroller" class="playlistview-placeholder">
                 <div class="flex-me" v-if="videos.length == 0">
@@ -298,10 +298,8 @@ form input {
   margin: 0;
   position: absolute;
   bottom: 10px;
-  /*right: 200px;*/
   padding: 10px 25px;
   font-size: 24px;
-  /*align-self: flex-end;*/
 }
 
 .new-playlist {
@@ -377,6 +375,30 @@ form input {
 
 .playlistview {
   margin-bottom: 5px
+}
+
+@media only screen and (max-width: 995px) {
+  h2 {
+    font-size: 32px
+  }
+
+  .tall {
+    height: 50%;
+  }
+
+  .play {
+    margin: 0;
+    position: absolute;
+    bottom: 10px;
+    padding: 5px 15px;
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 995px) {
+  .new-playlist {
+    visibility: hidden;
+  }
 }
 
 </style>

@@ -295,5 +295,21 @@ form input {
   margin-bottom: 5px
 }
 
+@media only screen and (max-width: 995px) {
+  h1 {
+    font-size: 32px
+  }
+
+  .tall {
+    height: 50%;
+  }
+}
+
+@media only screen and (max-width: 995px) {
+  .home {
+    visibility: hidden;
+  }
+}
+
 
 </style>
