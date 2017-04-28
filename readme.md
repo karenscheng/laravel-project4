@@ -4,6 +4,10 @@ Created by: <a href="http://karenscheng.com">Karen Cheng</a>
 
 Live link coming soon!
 
+### API Gitbook:
+
+<a href="https://karenscheng.gitbooks.io/crowdplay/content/">Crowdplay API</a>
+
 ## Getting Started
 
 ### Important information:
@@ -25,9 +29,6 @@ php artisan migrate
 npm run dev
 
 ```
-### API Gitbook:
-
-<a href="https://karenscheng.gitbooks.io/crowdplay/content/">Crowdplay API</a>
 
 ## Using the app:
 
