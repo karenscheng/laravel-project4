@@ -2,7 +2,7 @@
   <!-- Add.vue is the only unique component to a user adding to a playlist  -->
   <div class="add">
     <div class="theme-panel">
-      <h1>Contribute To Playlist</h1>
+      <h1>Contribute To Playlist "{{ this.playlist.name }}"</h1>
       <a href="/" class="btn btn-main home">Home</a>
     </div>
     <div class="overlay-panel"> <!-- everything with the black background-->
