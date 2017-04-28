@@ -28,8 +28,8 @@
 // gold http://www.youtube.com/embed/Q5_47eLxb8o?enablejsapi=1&origin=http://example.com
 // gold https://www.youtube.com/watch?v=Q5_47eLxb8o
 // wrong https://www.youtube.com/watch?v=EfYf6RIxZ3Y
-// awk https://www.youtube.com/watch?v=ultX5ZR-sQE
-// fred https://www.youtube.com/watch?v=ukNOaKeUEQY
+// fred https://www.youtube.com/watch?v=ultX5ZR-sQE
+// awk https://www.youtube.com/watch?v=ukNOaKeUEQY
 
 export default {
     data () {

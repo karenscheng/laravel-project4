@@ -25,7 +25,9 @@
         <button class="btn btn-main" @click="add">Add Video</button>
       </div>
       <div class="playlistview-placeholder">
-        <h3 v-if="videos.length == 0">Your playlist is currently empty.</h3>
+        <div class="flex-me" v-if="videos.length == 0">
+          <h3>Your playlist is currently empty.</h3>
+        </div>
         <PlaylistView class="playlistview" v-for="video in videos" :currentVideo="video" @remove="remove" @edit="editVideo" :admin="admin"></PlaylistView>
       </div>
     </div>
@@ -309,6 +311,15 @@ form input {
   background-color: rgba(255, 255, 255, 0.1);
   overflow-y: scroll;
   position: relative;
+}
+
+.flex-me {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .playlistview {

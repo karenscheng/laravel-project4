@@ -46,13 +46,13 @@ Route::get('/styleguide', function () {
     return view('styleguide');
 });
 
-Route::get('/edit/{id}', function ($id) {
+Route::get('/edit/{id}', function ($id) { // route for a user to add videos to existing playlist
     $data = [];
     $playlist = $data['playlist'] = App\Playlist::find($id);
     return view('add', $data);
 });
 
-Route::get('/playlist/{id}', function ($id) {
+Route::get('/playlist/{id}', function ($id) { // route for admin
     $data = [];
     $playlist = $data['playlist'] = App\Playlist::find($id);
     return view('admin', $data);

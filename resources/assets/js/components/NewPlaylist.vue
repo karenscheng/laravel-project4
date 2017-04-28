@@ -27,8 +27,8 @@ export default {
         creation: false,
         playing: false,
         fromAdmin: window.fromAdmin,
+        playlistId: window.playlist_id,
         videos: null,
-        playlistId: null
       }
     },
     components: {
@@ -38,17 +38,13 @@ export default {
     },
     created () {
       console.log('NewPlaylist -> created. playlistId & fromAdmin: ' + this.playlistId + ' ' + this.fromAdmin);
-      if (this.fromAdmin) {
-        this.playlistId = window.playlist_id;
-        this.creation = true;
-        this.first = false;
-      }
+      this.creation = true;
+      this.first = false;
     },
     methods: {
       made (playlistId) {
+        window.location = `/playlist/${playlistId}`
         this.playlistId = playlistId;
-        this.first = false;
-        this.creation = true;
       },
       returnHome () {
         this.$emit("goHome")
