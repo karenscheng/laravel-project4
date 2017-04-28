@@ -24,10 +24,11 @@
             <a href="/styleguide" class="credit-entry">Styleguide</a>
             <a href="http://karenscheng.com/" target="_newtab" class="credit-entry">Portfolio</a>
             <a href="https://github.com/karenscheng" target="_newtab" class="credit-entry">Github</a>
-            <a href="#" target="_newtab" class="credit-entry">Credits</a>
+            <a href="#" @click="viewCredits" class="credit-entry">Credits</a>
           </div>
         </div>
       </div>
+      <Credits class="overlay" v-if="creditsMode" @goHome="normalView"></Credits>
       <Info class="overlay" v-if="infoMode" @goHome="normalView"></Info>
       <NewPlaylist class="overlay" v-if="formMode" @goHome="normalView"></NewPlaylist>
     </div>
@@ -38,6 +39,7 @@
 
 import Info from './Info'
 import NewPlaylist from './NewPlaylist'
+import Credits from './Credits'
 import axios from 'axios'
 
 export default {
@@ -48,7 +50,8 @@ export default {
         imgSrc: "./Bokeh-Tov.jpg",
         normal: true,
         infoMode: false,
-        formMode: false
+        formMode: false,
+        creditsMode: false
       }
     },
     mounted() {
@@ -121,7 +124,8 @@ export default {
     },
     components: {
       Info,
-      NewPlaylist
+      NewPlaylist,
+      Credits
     },
     methods: {
       info () {
@@ -131,10 +135,15 @@ export default {
       normalView () {
         this.infoMode = false
         this.formMode = false
+        this.creditsMode = false
         this.normal = true
       },
       createPlaylist () {
         window.location = `/create`
+      },
+      viewCredits () {
+        this.creditsMode = true
+        this.normal = false
       }
     }
 }
