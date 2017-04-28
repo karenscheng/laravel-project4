@@ -1,8 +1,6 @@
 <h1 align="center">Crowdplay</h1>
 
-Created by: Karen Cheng
-
-<a href="http://karenscheng.com">Portfolio</a>
+Created by: <a href="http://karenscheng.com">Karen Cheng</a>
 
 Live link coming soon!
 
