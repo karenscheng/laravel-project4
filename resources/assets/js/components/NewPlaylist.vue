@@ -7,7 +7,7 @@
       <PlaylistForm @created="made"></PlaylistForm>
     </div>
     <PlaylistCreator @play="play" v-if="creation" :playlistId="playlistId"></PlaylistCreator>
-    <Play v-if="playing" @edit="edit" :playlistId="playlistId" :videos="videos"></Play>
+    <Play v-if="playing" @edit="edit" :playlistId="playlistId"></Play>
   </div>
 </template>
 

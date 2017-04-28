@@ -55,8 +55,7 @@ export default {
         playlist: null
       }
     },
-    created () {
-
+    mounted () {
       this.getPlaylist();
       this.fetch(this.playlistId);
     },

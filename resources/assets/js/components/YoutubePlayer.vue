@@ -8,7 +8,8 @@
 export default {
   name: 'YoutubePlayer',
   props: [
-    'link'
+    'link',
+    'index'
   ],
   data () {
     return {
@@ -18,9 +19,12 @@ export default {
     }
   },
   mounted () {
+    console.log('YoutubePlayer -> link: ' + this.link);
     this.$nextTick(() => {
       this.parseLink()
-      this.render()
+      setTimeout(() => {
+        this.render()
+      }, 500)
     })
   },
   methods: {
@@ -31,6 +35,7 @@ export default {
     },
     render () {
       console.log(`Youtube ${this.youtubeid} -> render.`)
+      console.log(window.YT);
       this.el = new window.YT.Player(this.youtubeid, {
         height: '100%',
         width: '100%',

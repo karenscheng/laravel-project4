@@ -24,6 +24,7 @@
             <a href="/styleguide" class="credit-entry">Styleguide</a>
             <a href="http://karenscheng.com/" target="_newtab" class="credit-entry">Portfolio</a>
             <a href="https://github.com/karenscheng" target="_newtab" class="credit-entry">Github</a>
+            <a href="#" target="_newtab" class="credit-entry">Credits</a>
           </div>
         </div>
       </div>

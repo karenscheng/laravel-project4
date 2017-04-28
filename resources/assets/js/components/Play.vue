@@ -2,7 +2,7 @@
   <div class="play">
     <button class="btn btn-main edit" @click="edit">Edit</button>
     <h2>Playing Playlist "{{ this.playlist.name }}"</h2>
-    <!-- <YoutubePlayer v-for="(video, i) in videos" v-if="index === i":index="i" :key="i" :youtubeid="video.link"></YoutubePlayer> -->
+    <YoutubePlayer v-for="(video, i) in videos" v-if="index === i" :index="i" :link="video.link"></YoutubePlayer>
   </div>
 </template>
 
@@ -14,18 +14,18 @@ export default {
     data () {
       return {
         playlist: null,
-        index: 0
+        index: 0,
+        videos: null
       }
     },
-    created () {
+    mounted () {
       console.log('Play -> playlistId: ' + this.playlistId);
-      console.log('Play -> videos: ' + this.videos);
       this.fetch(this.playlistId);
+      console.log('Play -> videos: ' + this.videos);
       this.getPlaylist();
     },
     props: [
-      'playlistId',
-      'videos'
+      'playlistId'
     ],
     components: {
       YoutubePlayer
@@ -35,23 +35,23 @@ export default {
         // console.log('NewPlaylist->fetch: playlist_id ' + video.playlist_id);
         axios.get(`/playlists/${id}/videos`)
           .then((response) => {
-            console.log('NewPlaylist -> fetch response.data: ' + response.data);
+            console.log('Play -> fetch response.data: ' + response.data);
             this.videos = response.data;
             console.log(this.videos);
           })
           .catch((response) => {
-            console.log('NewPlaylist -> fetch error');
+            console.log('Play -> fetch error');
           })
       },
       getPlaylist () {
         console.log('getPlaylist() - current playlist: ' + this.playlistId);
         axios.get(`playlists/${this.playlistId}`)
           .then((response) => {
-            console.log('Add -> get playlist success: ' + response);
+            console.log('Play -> get playlist success: ' + response);
             this.playlist = response.data;
           })
           .catch((response) => {
-            console.log('Add -> get playlist error: ' + response);
+            console.log('Play -> get playlist error: ' + response);
           })
       },
       edit () {
