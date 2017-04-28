@@ -1,12 +1,12 @@
 <h1 align="center">Crowdplay</h1>
 
-Created by: <a href="http://karenscheng.com">Karen Cheng</a>
+Created by: <a href="http://karenscheng.com" target="_newtab">Karen Cheng</a>
 
 Live link coming soon!
 
 ### API Gitbook:
 
-<a href="https://karenscheng.gitbooks.io/crowdplay/content/">Crowdplay API</a>
+<a href="https://karenscheng.gitbooks.io/crowdplay/content/" target="_newtab">Crowdplay API</a>
 
 ## Getting Started
 
