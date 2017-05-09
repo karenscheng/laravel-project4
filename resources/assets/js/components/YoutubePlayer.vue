@@ -3,16 +3,20 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 left nopadding center">
-        <!-- <h3>Previous Video: </h3> -->
-        <!-- will implement if I have time -->
+        <h3>Previous Video: </h3>
+        <button v-if="this.hasPrev" class="btn btn-main" @click="playPrev">
+          <h4>Play '{{ this.prevMod }}'</h4>
+        </button>
       </div>
       <div class="col-md-6 middle nopadding center">
         <h3>Currently playing: "{{ this.name }}"</h3>
         <div class="video-player" :id="this.youtubeid"></div>
       </div>
       <div class="col-md-3 right nopadding center">
-        <!-- <h3>Next Video: </h3> -->
-        <!-- will implement if I have time -->
+        <h3>Next Video: </h3>
+        <button v-if="this.hasNext" class="btn btn-main" @click="playNext">
+          <h4>Play '{{ this.nextMod }}'</h4>
+        </button>
       </div>
     </div>
   </div>
@@ -25,13 +29,22 @@ export default {
   props: [
     'link',
     'index',
-    'name'
+    'name',
+    'prev',
+    'next',
+    'prevInd',
+    'nextInd',
+    'lastInd'
   ],
   data () {
     return {
       youtubeid: null,
       el: null,
       loaded: false,
+      prevMod: '',
+      nextMod: '',
+      hasPrev: false,
+      hasNext: false
     }
   },
   mounted () {
@@ -41,7 +54,23 @@ export default {
       setTimeout(() => {
         this.render()
       }, 500)
-    })
+    });
+
+    if (this.prevInd < 0) {
+      this.prevMod = '';
+      this.hasPrev = false
+    } else {
+      this.prevMod = this.prev;
+      this.hasPrev = true
+    }
+
+    if (this.nextInd >= this.lastInd) {
+      this.nextMod = '';
+      this.hasNext = false
+    } else {
+      this.nextMod = this.next;
+      this.hasNext = true
+    }
   },
   methods: {
     parseLink () {
@@ -100,6 +129,12 @@ export default {
     loadError () {
       console.log(`Youtube ${this.youtubeid} -> Load error.`)
       this.$emit('error')
+    },
+    playNext () {
+      this.$emit('playNext')
+    },
+    playPrev () {
+      this.$emit('playPrev')
     }
   }
 }
@@ -122,6 +157,33 @@ h3 {
   color: white;
   text-align: center;
   margin-bottom: 30px;
+}
+
+h4 {
+  font-family: 'Open Sans';
+  font-weight: 200;
+  text-align: center;
+  color: #ffd7af;
+}
+
+.btn-main {
+  border-radius: 50px;
+  border: 3px solid #ffd7af;
+  color: 	#ffd7af;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  padding: 10px 15px;
+  display: inline-block;
+  margin: 10px 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+  outline: none;
+  position: relative;
+  transition: all 0.3s;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
 }
 
 .YoutubePlayer {

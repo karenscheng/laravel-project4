@@ -3,7 +3,7 @@
     <button class="btn btn-main edit" @click="edit">Edit</button> <!-- edit playlist name. calls edit -->
     <h2>Playing Playlist "{{ this.playlist.name }}"</h2>
     <!-- TODO: when playlist is done playing, show prompt that says "play again" or "add more videos to playlist" -->
-    <YoutubePlayer v-for="(video, i) in videos" v-if="index === i" :index="i" :link="video.link" :name="video.name" @done="nextVideo"></YoutubePlayer>
+    <YoutubePlayer v-for="(video, i) in videos" v-if="index === i" :index="i" :link="video.link" :name="video.name" :prev="videos[checkIndex(index-1)].name" :next="videos[checkIndex(index+1)].name" :prevInd='index-1' :nextInd='index+1' :lastInd="videos.length" @done="nextVideo" @playNext="nextVideo" @playPrev="prevVideo"></YoutubePlayer>
   </div>
 </template>
 
@@ -16,13 +16,14 @@ export default {
       return {
         playlist: null,
         index: 0,
-        videos: null
+        videos: null,
+        prevInd: 0,
+        nextInd: 0
       }
     },
     mounted () {
       console.log('Play -> playlistId: ' + this.playlistId);
       this.fetch(this.playlistId);  // populates videos
-      console.log('Play -> videos: ' + this.videos);
       this.getPlaylist(); // populates playlist
     },
     props: [
@@ -37,7 +38,8 @@ export default {
           .then((response) => {
             console.log('Play -> fetch response.data: ' + response.data);
             this.videos = response.data;
-            console.log(this.videos);
+            console.log('Play -> videos: ' + this.videos);
+            this.setIndexes();
           })
           .catch((response) => {
             console.log('Play -> fetch error');
@@ -54,11 +56,23 @@ export default {
             console.log('Play -> get playlist error: ' + response);
           })
       },
+      checkIndex (index) {
+        if (index < 0) {
+          return 0;
+        } else if (index > this.videos.length) {
+          return this.videos.length;
+        } else {
+          return index;
+        }
+      },
       edit () { // parent executes playlist name change
         this.$emit('edit');
       },
       nextVideo () {  // called when YoutubePlayer emits "done"
         this.index++;
+      },
+      prevVideo () {
+        this.index--;
       }
     }
 }

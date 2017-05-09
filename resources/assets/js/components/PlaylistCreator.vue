@@ -18,16 +18,29 @@
     <div class="overlay-panel">
       <div class="container">
         <div class="row">
-          <div class="col-md-6 col-s-12 tall"> <!-- left form -->
-            <h3>Add video to playlist</h3>
-            <form action="#" v-on:submit="add">
-              <input type="text" placeholder="Custom video name" v-model="videoName">
-              <input type="text" placeholder="Youtube video link" v-model="link">
-            </form>
-            <button class="btn btn-main" @click="add">Add Video</button>
-            <!-- feedback for what's going on because sometimes there's a lag -->
-            <p class="boo" v-if="error">Error: Video could not be added</p>
-            <p class="yay" v-if="success">Video Added!</p>
+          <div class="col-md-6 col-s-12 center-align"> <!-- left form -->
+            <div class="share">
+              <h4>Share this link with your friends to have them contribute to this playlist:</h4>
+              <!-- Target -->
+              <input id="foo" :value='this.shareLink'>
+              <!-- Trigger -->
+              <!-- TODO: figure out how to get copy to clipboard working -->
+              <!-- <button class="btn btn-main" data-clipboard-target="#foo">
+                  <p id="copy" alt="Copy to clipboard">Copy to clipboard</p>
+              </button> -->
+            </div>
+            <div class="add-video">
+              <h3>Add video to playlist</h3>
+              <form action="#" v-on:submit="add">
+                <input type="text" placeholder="Custom video name" v-model="videoName">
+                <input type="text" placeholder="Youtube video link" v-model="link">
+              </form>
+              <button class="btn btn-main" @click="add">Add Video</button>
+              <!-- feedback for what's going on because sometimes there's a lag -->
+              <p class="boo" v-if="error">Error: Video could not be added</p>
+              <p class="yay" v-if="success">Video Added!</p>
+            </div>
+            <h4 class="bottom">Bookmark this page so that you can access your playlist at any time!</h4>
           </div>
           <div class="col-md-6 col-s-12 tall"> <!-- right list of videos -->
             <div class="light-background">
@@ -70,7 +83,8 @@ export default {
         editing: false,
         admin: true,
         videos: [],
-        playlist: null
+        playlist: null,
+        shareLink: ''
       }
     },
     mounted () {
@@ -162,6 +176,7 @@ export default {
       },
       getPlaylist () {
         console.log('getPlaylist() - current playlist: ' + this.playlistId);
+        this.shareLink = 'https://karenscheng.herokuapp.com/edit/' + this.playlistId;
         axios.get(`playlists/${this.playlistId}`)
           .then((response) => {
             console.log('Add -> get playlist success: ' + response);
@@ -248,12 +263,20 @@ h3 {
   color: white
 }
 
+h4 {
+  font-family: 'Open Sans';
+  font-weight: 200;
+  text-align: center;
+  color: #ffd7af;
+  font-style: italic;
+}
+
 form {
   display: flex;
   flex-direction: column;
 }
 
-form input {
+form input, .share input {
   width: 30vw;
   font-family: 'Open Sans';
   color: white;
@@ -267,6 +290,34 @@ form input {
   border-left: none;
   border-right: none;
   border-bottom: solid #eeeeee 1px;
+}
+
+#foo {
+  width: 40vw;
+}
+
+#copy {
+  padding: 0;
+  display: inline-block;
+  margin: 0;
+}
+
+.share {
+  margin-bottom: 50px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-video {
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .playlist-name {
@@ -339,6 +390,14 @@ form input {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.center-align {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
 }
 
