@@ -59,8 +59,8 @@ export default {
       checkIndex (index) {
         if (index < 0) {
           return 0;
-        } else if (index > this.videos.length) {
-          return this.videos.length;
+        } else if (index >= this.videos.length) {
+          return this.videos.length - 1;
         } else {
           return index;
         }
