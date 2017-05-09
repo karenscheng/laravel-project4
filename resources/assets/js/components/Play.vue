@@ -4,6 +4,10 @@
     <h2>Playing Playlist "{{ this.playlist.name }}"</h2>
     <!-- TODO: when playlist is done playing, show prompt that says "play again" or "add more videos to playlist" -->
     <YoutubePlayer v-for="(video, i) in videos" v-if="index === i" :index="i" :link="video.link" :name="video.name" :prev="videos[checkIndex(index-1)].name" :next="videos[checkIndex(index+1)].name" :prevInd='index-1' :nextInd='index+1' :lastInd="videos.length" @done="nextVideo" @playNext="nextVideo" @playPrev="prevVideo"></YoutubePlayer>
+    <div v-if="finished" class="backdrop">
+      <button class="btn btn-main replay" @click="replay">Play Again</button>
+      <button class="btn btn-main edit-playlist" @click="edit">Edit Playlist</button>
+    </div>
   </div>
 </template>
 
@@ -18,7 +22,8 @@ export default {
         index: 0,
         videos: null,
         prevInd: 0,
-        nextInd: 0
+        nextInd: 0,
+        finished: false
       }
     },
     mounted () {
@@ -70,9 +75,16 @@ export default {
       },
       nextVideo () {  // called when YoutubePlayer emits "done"
         this.index++;
+        if (this.index >= this.videos.length) {
+          this.finished = true
+        }
       },
       prevVideo () {
         this.index--;
+      },
+      replay () {
+        this.index = 0;
+        this.finished = false
       }
     }
 }
@@ -129,9 +141,26 @@ h2 {
   /*align-self: flex-end;*/
 }
 
+.replay, .edit-playlist {
+  padding: 15px 45px;
+  margin: 30px 15px;
+  font-size: 34px;
+}
+
 .btn-main:hover {
   background: rgba(255,	215,175, 0.3);
   color: 	#ffd7af;
+}
+
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.7);
+  margin-top: 50px;
+  height: 70vh;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 </style>
