@@ -2,7 +2,7 @@
 
 Created by: <a href="http://karenscheng.com" target="_newtab">Karen Cheng</a>
 
-Live link coming soon!
+Live link: <a href="https://karenscheng.herokuapp.com/" target="_newtab">Click here</a>
 
 ### API Gitbook:
 
@@ -74,7 +74,7 @@ This is what the app looks like when it's playing the playlist.
 
 ![alt-tag](https://github.com/karenscheng/laravel-project4/blob/master/public/contribute.png)
 
-To have someone contribute to a playlist you created, have them navigate to: 
+To have someone contribute to a playlist you created, have them navigate to:
 
 ```
 /edit/{id}
